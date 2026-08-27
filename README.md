@@ -23,6 +23,12 @@ Esto le da a cualquier usuario una estimación de a qué hora sale el colectivo 
 
 Cuando un estudiante se sube al colectivo, aprieta el botón **"Subí"** e indica en qué lugar/parada se subió. Eso queda registrado con el horario, y les sirve a los demás usuarios para saber en tiempo real por dónde anda el colectivo ese día — no solo la estimación teórica de la ruta 0, sino el dato real del momento.
 
+### 3. ¿Está a tiempo o no?
+
+Los promedios calculados en la ruta 0 son un piso, no una garantía: en la práctica cada parada varía (gente que tarda más en subir, semáforos, tráfico). Por eso a los tiempos promedio se les suma un margen de seguridad antes de usarlos — por ejemplo, si en promedio subir a alguien tarda 10 segundos, se toma una base de 30 segundos por parada en vez del valor "justo".
+
+Con ese promedio ajustado, el horario de salida y la última parada reportada en vivo (vía "Subí"), se puede proyectar a qué hora debería estar el colectivo en cualquier punto de la ruta. Comparando esa proyección contra el horario actual, la app puede indicar si el colectivo va a tiempo, adelantado o atrasado.
+
 ## Roadmap
 
 - [ ] Registrar la ruta 0 (paradas + horarios del primer recorrido completo)
@@ -30,6 +36,7 @@ Cuando un estudiante se sube al colectivo, aprieta el botón **"Subí"** e indic
 - [ ] Mostrar a los usuarios el horario estimado de salida y de llegada a cada parada
 - [ ] Botón "Subí" para reportar ubicación en tiempo real
 - [ ] Vista para los demás usuarios de por dónde anda el colectivo en vivo
+- [ ] Margen de seguridad sobre los promedios y cálculo de puntualidad (a tiempo / adelantado / atrasado)
 - [ ] (Futuro) Estimar cuánto se paga desde la parada del usuario hasta la facultad
 
 ## Estado del proyecto
