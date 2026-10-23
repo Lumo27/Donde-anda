@@ -1,0 +1,11 @@
+orden,parada,hora_llegada,hora_salida,se_detuvo,notas
+1,Primera parada,07:00:00,07:02:10,si,FICTICIO - cabecera; espera a que suba la gente
+2,Parada ficticia 2,07:05:40,07:06:05,si,FICTICIO
+3,Parada ficticia 3,07:09:20,07:09:20,no,FICTICIO - no había nadie esperando
+4,Alberti,07:14:30,07:15:20,si,FICTICIO - parada con mucha gente
+5,Parada ficticia 5,07:19:10,07:19:35,si,FICTICIO
+6,Parada ficticia 6,07:24:50,07:25:10,si,FICTICIO - semáforo largo antes de la parada
+7,Del Viso,07:31:00,07:32:05,si,FICTICIO
+8,Parada ficticia 8,07:37:40,07:38:00,si,FICTICIO
+9,Parada ficticia 9,07:44:30,07:44:30,no,FICTICIO
+10,Parque Industrial,07:51:15,07:51:15,si,FICTICIO - llegada a la sede
