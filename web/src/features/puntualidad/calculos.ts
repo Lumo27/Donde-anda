@@ -8,7 +8,7 @@ import { MARGEN_DETENIDO_SEG, MARGEN_TRAMO_PORCENTAJE } from './config'
 // Cada función usa los tiempos de las paradas tal como vienen. Para estimar con margen de
 // seguridad, pasarles las paradas por `aplicarMargen` (#14) antes.
 
-function enOrden(paradas: Parada[]): Parada[] {
+export function enOrden(paradas: Parada[]): Parada[] {
   return [...paradas].sort((a, b) => a.orden - b.orden)
 }
 
