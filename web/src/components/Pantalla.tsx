@@ -32,17 +32,18 @@ export function Pantalla({ children, volverA }: Props) {
         )}
       </header>
 
-      {datos?.recorrido.ficticia && (
-        <p
-          role="note"
-          className="mx-4 mt-3 flex items-center justify-center gap-2 rounded-lg border-2 border-amber-600 bg-amber-50 px-3 py-1.5 text-sm font-bold text-amber-900"
-        >
-          <TriangleAlert aria-hidden className="h-4 w-4" strokeWidth={2.5} />
-          Datos de prueba (ruta ficticia)
-        </p>
-      )}
-
-      <main className="flex flex-1 flex-col gap-4 p-4">{children}</main>
+      <main className="flex flex-1 flex-col gap-4 p-4">
+        {datos?.recorrido.ficticia && (
+          <p
+            role="note"
+            className="flex items-center justify-center gap-2 rounded-lg border-2 border-amber-600 bg-amber-50 px-3 py-1.5 text-sm font-bold text-amber-900"
+          >
+            <TriangleAlert aria-hidden className="h-4 w-4" strokeWidth={2.5} />
+            Datos de prueba (ruta ficticia)
+          </p>
+        )}
+        {children}
+      </main>
     </div>
   )
 }

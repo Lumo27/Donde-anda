@@ -43,6 +43,7 @@ export default function PantallaEstado() {
 
   return (
     <Pantalla>
+      <h1 className="sr-only">¿Dónde anda el {recorrido.linea}?</h1>
       <Tarjeta titulo="Último reporte">
         {enVivo ? (
           <>
