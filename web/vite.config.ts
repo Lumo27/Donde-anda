@@ -34,6 +34,10 @@ export default defineConfig({
       },
     }),
   ],
+  server: {
+    // Mientras no haya Firebase, la app lee la ruta ficticia de docs/ruta0/ (fuera de web/).
+    fs: { allow: ['..'] },
+  },
   test: {
     // Los tests viven al lado del código: src/**/*.test.ts
     passWithNoTests: true,
