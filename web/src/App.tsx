@@ -1,23 +1,13 @@
 import { lazy, Suspense, type ReactNode } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import { Pantalla } from './components/Pantalla'
 import PantallaEstado from './features/estado/PantallaEstado'
 import ElegirMiParada from './features/paradas/ElegirMiParada'
+import ListaParadas from './features/paradas/ListaParadas'
 import { useMiParada } from './features/paradas/useMiParada'
 import { useRecorrido } from './services/datos'
 
 // Solo en desarrollo: página para ver los componentes sueltos (#25).
 const PaginaComponentes = import.meta.env.DEV ? lazy(() => import('./features/dev/PaginaComponentes')) : null
-
-// Pantalla provisoria. Se reemplaza por ListaParadas en #29.
-function Provisoria({ titulo, tarjeta }: { titulo: string; tarjeta: string }) {
-  return (
-    <Pantalla>
-      <h1 className="text-lg font-bold">{titulo}</h1>
-      <p className="text-gray-600">Pantalla provisoria. Se construye en la tarjeta {tarjeta}.</p>
-    </Pantalla>
-  )
-}
 
 /** Si todavía no eligió "mi parada" (o la que tenía ya no existe), lo manda a elegirla primero. */
 function RequiereMiParada({ children }: { children: ReactNode }) {
@@ -45,7 +35,7 @@ export default function App() {
           path="/paradas"
           element={
             <RequiereMiParada>
-              <Provisoria titulo="Paradas" tarjeta="#29" />
+              <ListaParadas />
             </RequiereMiParada>
           }
         />
