@@ -1,4 +1,5 @@
 import type { Parada } from '../../types/modelos'
+import { MARGEN_DETENIDO_SEG, MARGEN_TRAMO_PORCENTAJE } from './config'
 
 // Cálculos base del recorrido a partir de la ruta 0 (#13). Funciones puras: sin Firebase ni React.
 //
@@ -9,6 +10,37 @@ import type { Parada } from '../../types/modelos'
 
 function enOrden(paradas: Parada[]): Parada[] {
   return [...paradas].sort((a, b) => a.orden - b.orden)
+}
+
+export interface Margen {
+  /** Piso de segundos detenido en cada parada intermedia. */
+  detenidoMinimoSeg: number
+  /** Cuánto se estira cada tramo, en %. */
+  tramoPorcentaje: number
+}
+
+export const MARGEN_POR_DEFECTO: Margen = {
+  detenidoMinimoSeg: MARGEN_DETENIDO_SEG,
+  tramoPorcentaje: MARGEN_TRAMO_PORCENTAJE,
+}
+
+/**
+ * Infla los tiempos de la ruta 0 para no prometer de menos (#14): cada tramo se estira un %,
+ * y en cada parada intermedia se toma al menos el piso de tiempo detenido.
+ * No cambia la cabecera (su espera no cuenta) ni la última parada (ahí termina el viaje).
+ */
+export function aplicarMargen(paradas: Parada[], margen: Margen = MARGEN_POR_DEFECTO): Parada[] {
+  const ordenadas = enOrden(paradas)
+  return ordenadas.map((p, i) => {
+    const esIntermedia = i > 0 && i < ordenadas.length - 1
+    return {
+      ...p,
+      segundosDesdeAnterior: p.segundosDesdeAnterior * (1 + margen.tramoPorcentaje / 100),
+      segundosDetenido: esIntermedia
+        ? Math.max(p.segundosDetenido, margen.detenidoMinimoSeg)
+        : p.segundosDetenido,
+    }
+  })
 }
 
 /** Segundos desde la salida de la cabecera hasta que el colectivo LLEGA a cada parada (en orden). */
