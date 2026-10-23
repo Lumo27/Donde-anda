@@ -1,6 +1,7 @@
 import { lazy, Suspense, type ReactNode } from 'react'
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { Pantalla } from './components/Pantalla'
+import PantallaEstado from './features/estado/PantallaEstado'
 import ElegirMiParada from './features/paradas/ElegirMiParada'
 import { useMiParada } from './features/paradas/useMiParada'
 import { useRecorrido } from './services/datos'
@@ -8,8 +9,7 @@ import { useRecorrido } from './services/datos'
 // Solo en desarrollo: página para ver los componentes sueltos (#25).
 const PaginaComponentes = import.meta.env.DEV ? lazy(() => import('./features/dev/PaginaComponentes')) : null
 
-// Pantallas provisorias. Se reemplazan por las reales en E5:
-// "/" → PantallaEstado (#27) · "/paradas" → ListaParadas (#29)
+// Pantalla provisoria. Se reemplaza por ListaParadas en #29.
 function Provisoria({ titulo, tarjeta }: { titulo: string; tarjeta: string }) {
   return (
     <Pantalla>
@@ -37,7 +37,7 @@ export default function App() {
           path="/"
           element={
             <RequiereMiParada>
-              <Provisoria titulo="Estado" tarjeta="#27" />
+              <PantallaEstado />
             </RequiereMiParada>
           }
         />
