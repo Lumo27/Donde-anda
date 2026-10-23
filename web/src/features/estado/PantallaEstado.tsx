@@ -5,7 +5,8 @@ import { Pantalla } from '../../components/Pantalla'
 import { Tarjeta } from '../../components/Tarjeta'
 import { useRecorrido, useUltimoReporte } from '../../services/datos'
 import { useMiParada } from '../paradas/useMiParada'
-import { aplicarMargen, resumenRecorrido } from '../puntualidad/calculos'
+import { BotonMeSubi } from '../reportes/BotonMeSubi'
+import { aplicarMargen, enOrden, resumenRecorrido } from '../puntualidad/calculos'
 import { estimarLlegadaAMiParada } from '../puntualidad/eta'
 import { proyectarColectivo } from '../puntualidad/proyeccion'
 import { calcularEstado } from '../puntualidad/puntualidad'
@@ -104,7 +105,16 @@ export default function PantallaEstado() {
         </Link>
       </div>
 
-      {/* #28: botón "Me subí" */}
+      <div className="mt-auto pt-2">
+        <BotonMeSubi
+          recorridoId={recorrido.id}
+          miParadaId={miParadaId}
+          // Se puede subir en cualquier parada menos la última (la facu).
+          opciones={enOrden(paradas)
+            .slice(0, -1)
+            .map((p) => ({ valor: p.id, etiqueta: p.nombre, detalle: p.id === miParadaId ? 'tu parada' : undefined }))}
+        />
+      </div>
     </Pantalla>
   )
 }

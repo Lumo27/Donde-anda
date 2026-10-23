@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes } from 'react'
+import { forwardRef, type ButtonHTMLAttributes } from 'react'
 
 // Botón base (#25). Mínimo 48 px de alto y foco visible al navegar con teclado (criterios de #07).
 
@@ -13,9 +13,13 @@ const estilos = {
   secundario: 'border-2 border-tinta bg-white text-tinta hover:bg-gray-50',
 }
 
-export function Boton({ variante = 'principal', grande = false, className = '', type = 'button', ...props }: Props) {
+export const Boton = forwardRef<HTMLButtonElement, Props>(function Boton(
+  { variante = 'principal', grande = false, className = '', type = 'button', ...props },
+  ref,
+) {
   return (
     <button
+      ref={ref}
       type={type}
       className={[
         'inline-flex w-full items-center justify-center gap-2 rounded-xl px-5 font-bold transition-colors',
@@ -28,4 +32,4 @@ export function Boton({ variante = 'principal', grande = false, className = '', 
       {...props}
     />
   )
-}
+})
