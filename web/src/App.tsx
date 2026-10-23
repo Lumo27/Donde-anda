@@ -1,6 +1,9 @@
-import { lazy, Suspense } from 'react'
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
-import { MapPin } from 'lucide-react'
+import { lazy, Suspense, type ReactNode } from 'react'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { Pantalla } from './components/Pantalla'
+import ElegirMiParada from './features/paradas/ElegirMiParada'
+import { useMiParada } from './features/paradas/useMiParada'
+import { useRecorrido } from './services/datos'
 
 // Solo en desarrollo: página para ver los componentes sueltos (#25).
 const PaginaComponentes = import.meta.env.DEV ? lazy(() => import('./features/dev/PaginaComponentes')) : null
@@ -9,28 +12,54 @@ const PaginaComponentes = import.meta.env.DEV ? lazy(() => import('./features/de
 // "/" → PantallaEstado (#27) · "/paradas" → ListaParadas (#29)
 function Provisoria({ titulo, tarjeta }: { titulo: string; tarjeta: string }) {
   return (
-    <main className="mx-auto flex min-h-screen max-w-md flex-col gap-4 bg-white p-6 text-tinta">
-      <header className="flex items-center gap-2 border-b border-gray-200 pb-4">
-        <MapPin aria-hidden className="h-6 w-6 text-acento" strokeWidth={2.5} />
-        <h1 className="text-xl font-extrabold">Donde anda?</h1>
-      </header>
-      <h2 className="text-lg font-bold">{titulo}</h2>
+    <Pantalla>
+      <h1 className="text-lg font-bold">{titulo}</h1>
       <p className="text-gray-600">Pantalla provisoria. Se construye en la tarjeta {tarjeta}.</p>
-      <nav className="flex gap-4 font-semibold text-petroleo underline">
-        <Link to="/">Estado</Link>
-        <Link to="/paradas">Paradas</Link>
-      </nav>
-    </main>
+    </Pantalla>
   )
+}
+
+/** Si todavía no eligió "mi parada" (o la que tenía ya no existe), lo manda a elegirla primero. */
+function RequiereMiParada({ children }: { children: ReactNode }) {
+  const datos = useRecorrido()
+  const paradaId = useMiParada((s) => s.paradaId)
+  if (!datos) return null
+  const existe = datos.paradas.some((p) => p.id === paradaId)
+  return existe ? children : <Navigate to="/mi-parada" replace />
 }
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Provisoria titulo="Estado" tarjeta="#27" />} />
-        <Route path="/paradas" element={<Provisoria titulo="Paradas" tarjeta="#29" />} />
-        {PaginaComponentes && <Route path="/componentes" element={<Suspense fallback={null}><PaginaComponentes /></Suspense>} />}
+        <Route path="/mi-parada" element={<ElegirMiParada />} />
+        <Route
+          path="/"
+          element={
+            <RequiereMiParada>
+              <Provisoria titulo="Estado" tarjeta="#27" />
+            </RequiereMiParada>
+          }
+        />
+        <Route
+          path="/paradas"
+          element={
+            <RequiereMiParada>
+              <Provisoria titulo="Paradas" tarjeta="#29" />
+            </RequiereMiParada>
+          }
+        />
+        {PaginaComponentes && (
+          <Route
+            path="/componentes"
+            element={
+              <Suspense fallback={null}>
+                <PaginaComponentes />
+              </Suspense>
+            }
+          />
+        )}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   )
