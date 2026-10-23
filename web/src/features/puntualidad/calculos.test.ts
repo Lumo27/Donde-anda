@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { paradasDesdeCsv } from '../paradas/ruta0Csv'
 import {
+  aplicarMargen,
   fechaEnArgentina,
   horaSalidaDelDia,
   horariosEstimados,
@@ -90,5 +91,47 @@ describe('horariosEstimados', () => {
       paradaId: 'del-viso',
       llegada: new Date('2026-10-26T07:28:50-03:00'), // 7:00 + 1730 s
     })
+  })
+})
+
+describe('aplicarMargen (#14)', () => {
+  const conMargen = aplicarMargen(paradas, { detenidoMinimoSeg: 30, tramoPorcentaje: 10 })
+
+  it('estira cada tramo un 10 %', () => {
+    expect(conMargen[1].segundosDesdeAnterior).toBeCloseTo(231) // 210 s + 10 %
+  })
+
+  it('toma al menos 30 s detenido en las paradas intermedias', () => {
+    expect(conMargen[1].segundosDetenido).toBe(30) // frenó 25 s
+    expect(conMargen[2].segundosDetenido).toBe(30) // no frenó
+    expect(conMargen[6].segundosDetenido).toBe(65) // Del Viso: ya era más de 30 s
+  })
+
+  it('no toca la espera en la cabecera ni la última parada', () => {
+    expect(conMargen[0]).toEqual(paradas[0])
+    expect(conMargen[9].segundosDetenido).toBe(paradas[9].segundosDetenido)
+  })
+
+  it('alarga el viaje total: 49 min 5 s pasan a 55 min 9 s', () => {
+    // Tramos: 2740 s × 1,1 = 3014 s. Detenido en intermedias: 205 s → 295 s.
+    expect(resumenRecorrido(conMargen).segundosTotales).toBeCloseTo(3309)
+  })
+
+  it('nunca acorta un tiempo respecto de la ruta 0', () => {
+    const llegadasSin = segundosHastaLlegar(paradas)
+    const llegadasCon = segundosHastaLlegar(conMargen)
+    llegadasCon.forEach((s, i) => expect(s).toBeGreaterThanOrEqual(llegadasSin[i]))
+  })
+
+  it('con margen cero deja los tiempos como estaban', () => {
+    expect(aplicarMargen(paradas, { detenidoMinimoSeg: 0, tramoPorcentaje: 0 })).toEqual(paradas)
+  })
+
+  it('usa los valores de config.ts por defecto', () => {
+    expect(aplicarMargen(paradas)).toEqual(conMargen)
+  })
+
+  it('no modifica las paradas originales', () => {
+    expect(paradas[1].segundosDesdeAnterior).toBe(210)
   })
 })
