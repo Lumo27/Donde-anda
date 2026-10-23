@@ -70,8 +70,9 @@ Los datos de la encuesta que se citan están en [`diagnostico.md`](diagnostico.m
 
 | Criterio | Medición | Resultado | Fecha |
 |---|---|---|---|
-| Usabilidad | Prueba de pasillo (3 personas) | | |
-| Accesibilidad | Lighthouse Accessibility | | |
-| Accesibilidad | TalkBack / VoiceOver | | |
+| Usabilidad | Prueba de pasillo (3 personas) | ⏳ Pendiente (la hace el grupo) | |
+| Accesibilidad | Lighthouse Accessibility (celular, build de producción, `/mi-parada`) | **100**. Además Performance 100 y Best Practices 100 | 23/10/2026 |
+| Accesibilidad | axe-core WCAG 2.1 AA en las 4 pantallas (inicio, Me subí, paradas, mi parada) | **0 problemas**. Se corrigieron 2 avisos: el cartel de datos de prueba quedaba fuera del `<main>` y el inicio no tenía `h1` | 23/10/2026 |
+| Accesibilidad | TalkBack / VoiceOver | ⏳ Pendiente (necesita celular real) | |
 | Escalabilidad | Lecturas por día en el piloto | | |
 | Sostenibilidad | Costo de Firebase en el piloto | | |
