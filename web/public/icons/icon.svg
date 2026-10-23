@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- Fuente de los íconos de la app (#17). Fondo a sangre para que sirva como "maskable":
+       el pin queda dentro de la zona segura (círculo del 80 %). -->
+  <rect width="1024" height="1024" fill="#0b1f33"/>
+  <g transform="translate(512 512) scale(14) translate(-32 -32)">
+    <path d="M32 12c-8.3 0-15 6.5-15 14.6C17 37.5 32 52 32 52s15-14.5 15-25.4C47 18.5 40.3 12 32 12z" fill="#f5c518"/>
+    <circle cx="32" cy="26.5" r="5.5" fill="#0b1f33"/>
+  </g>
+</svg>
