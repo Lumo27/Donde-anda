@@ -1,5 +1,9 @@
+import { lazy, Suspense } from 'react'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import { MapPin } from 'lucide-react'
+
+// Solo en desarrollo: página para ver los componentes sueltos (#25).
+const PaginaComponentes = import.meta.env.DEV ? lazy(() => import('./features/dev/PaginaComponentes')) : null
 
 // Pantallas provisorias. Se reemplazan por las reales en E5:
 // "/" → PantallaEstado (#27) · "/paradas" → ListaParadas (#29)
@@ -26,6 +30,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Provisoria titulo="Estado" tarjeta="#27" />} />
         <Route path="/paradas" element={<Provisoria titulo="Paradas" tarjeta="#29" />} />
+        {PaginaComponentes && <Route path="/componentes" element={<Suspense fallback={null}><PaginaComponentes /></Suspense>} />}
       </Routes>
     </BrowserRouter>
   )
