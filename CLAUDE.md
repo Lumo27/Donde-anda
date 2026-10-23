@@ -64,3 +64,17 @@ Modelo Firestore: `recorridos/{id}` (nombre, linea, horariosSalida) → `paradas
 ## MVP (alcance actual, ver PLANNING.md)
 
 Una sola línea/recorrido. Sin multi-línea, sin costo del viaje, sin notificaciones push, sin mapa en vivo con GPS continuo — todo eso es backlog futuro, no lo asumas al codear el MVP.
+
+## Flujo de Git
+
+- `main` → solo lo estable, lo que se publica. Nunca se commitea directo.
+- `develop` → donde se integran las tareas y se prueban juntas. Se pasa a `main` cuando está probado.
+- Una rama por tarea de Trello, que sale de `develop` y vuelve a `develop`:
+  - `feat/NN-descripcion` para código.
+  - `docs/NN-descripcion` para documentos.
+  - `fix/NN-descripcion` para arreglos.
+  - `chore/descripcion` para configuración.
+
+  `NN` es el número de la tarjeta.
+- Commit en cada paso, no todo junto al final. Mensajes en español y en tercera persona: "Agrega…", "Suma…", "Corrige…". Si aplica, con el número de tarjeta: `(#15)`.
+- Merge a `develop` con `--no-ff`, para que quede en el historial de qué tarea vino cada cambio.
