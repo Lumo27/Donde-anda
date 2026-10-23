@@ -49,7 +49,8 @@ export function useUltimoReporte(recorridoId: string): Reporte | null {
 /** Guarda un "Me subí". Solo recorrido, parada y hora. */
 export async function crearReporte(recorridoId: string, paradaId: string): Promise<void> {
   const reporte: Reporte = {
-    id: crypto.randomUUID(),
+    // crypto.randomUUID solo existe en https/localhost; desde el celular por la red local es http.
+    id: `${Date.now()}-${Math.random().toString(36).slice(2)}`,
     recorridoId,
     paradaId,
     creadoEn: new Date(),
