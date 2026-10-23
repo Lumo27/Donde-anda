@@ -1,0 +1,40 @@
+rules_version = '2';
+
+// Reglas de seguridad de Firestore (#19). Detalle y motivos en docs/modelo-datos.md, sección "Privacidad".
+// Garantizan del lado del servidor que un "Me subí" NO puede llevar datos de quién lo hizo,
+// aunque alguien modifique la app.
+// Subir con: firebase deploy --only firestore:rules
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function logueado() {
+      return request.auth != null;
+    }
+
+    // Recorrido y paradas: se leen desde la app; se cargan solo desde la consola o el script de #18.
+    match /recorridos/{recorridoId} {
+      allow read: if logueado();
+      allow write: if false;
+
+      match /paradas/{paradaId} {
+        allow read: if logueado();
+        allow write: if false;
+      }
+    }
+
+    // "Me subí": EXACTAMENTE recorrido, parada y hora del servidor. Ni uid, ni mail, ni ubicación.
+    match /reportes/{reporteId} {
+      allow read: if logueado();
+      allow create: if logueado()
+        && request.resource.data.keys().hasOnly(['recorridoId', 'paradaId', 'creadoEn'])
+        && request.resource.data.recorridoId is string
+        && request.resource.data.paradaId is string
+        && request.resource.data.creadoEn == request.time
+        && exists(/databases/$(database)/documents/recorridos/$(request.resource.data.recorridoId)/paradas/$(request.resource.data.paradaId));
+      allow update, delete: if false;
+    }
+
+    // Cualquier otra colección (por ejemplo "usuarios") queda bloqueada: no se guardan perfiles.
+  }
+}
