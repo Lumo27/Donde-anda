@@ -31,7 +31,9 @@ describe('PantallaEstado (#27)', () => {
     expect(screen.getByRole('region', { name: 'Tu parada: Parada ficticia 8' })).toBeTruthy()
     // 07:00 + 39 min 34 s (con margen) → faltan ~20 min
     expect(screen.getByText('Llega en ~20 min')).toBeTruthy()
-    expect(screen.getByText(/Estimado por horario \(sale 07:00\)/)).toBeTruthy()
+    expect(screen.getByText(/El de las 07:00, estimado por horario/)).toBeTruthy()
+    // En el recorrido: el de las 07:00 ya está en viaje
+    expect(screen.getByText(/El de las 07:00:/)).toBeTruthy()
   })
 
   it('con un "Me subí" muestra dónde anda, sin decir quién, y si va a tiempo', async () => {
@@ -40,6 +42,6 @@ describe('PantallaEstado (#27)', () => {
     await act(() => crearReporte('510-ida', 'del-viso'))
     expect(screen.getByText('Alguien se subió en Del Viso')).toBeTruthy()
     expect(screen.getByText('A tiempo')).toBeTruthy()
-    expect(screen.getByText(/Según el último reporte/)).toBeTruthy()
+    expect(screen.getByText(/El de las 07:00, según su último reporte/)).toBeTruthy()
   })
 })

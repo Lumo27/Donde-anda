@@ -62,16 +62,19 @@ export function useRecorrido(): DatosRecorrido | null {
 // Reportes del usuario, en memoria. Solo parada y hora: igual que en Firestore, nada de quién lo hizo.
 const useReportesLocales = create<{ reportes: Reporte[] }>(() => ({ reportes: [] }))
 
-/** El último "Me subí" del recorrido, o null si no hay. Se actualiza solo cuando llega uno nuevo. */
-export function useUltimoReporte(recorridoId: string): Reporte | null {
+/** Los "Me subí" del recorrido que ya ocurrieron, del más viejo al más nuevo. Se actualiza solo. */
+export function useReportes(recorridoId: string): Reporte[] {
   const momento = useAhora()
   const propios = useReportesLocales((s) => s.reportes)
-  let ultimo: Reporte | null = null
-  for (const r of [...REPORTES_SIMULADOS, ...propios]) {
-    if (r.recorridoId !== recorridoId || r.creadoEn > momento) continue
-    if (!ultimo || r.creadoEn >= ultimo.creadoEn) ultimo = r
-  }
-  return ultimo
+  return [...REPORTES_SIMULADOS, ...propios]
+    .filter((r) => r.recorridoId === recorridoId && r.creadoEn <= momento)
+    .sort((a, b) => a.creadoEn.getTime() - b.creadoEn.getTime())
+}
+
+/** El último "Me subí" del recorrido, o null si no hay. Se actualiza solo cuando llega uno nuevo. */
+export function useUltimoReporte(recorridoId: string): Reporte | null {
+  const reportes = useReportes(recorridoId)
+  return reportes[reportes.length - 1] ?? null
 }
 
 /** Guarda un "Me subí". Solo recorrido, parada y hora. */
