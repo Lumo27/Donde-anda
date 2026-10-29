@@ -8,8 +8,8 @@ import { ahora, configurarReloj } from './reloj'
 
 // Fuente de datos de la app. Las pantallas piden todo acá y no saben de dónde viene.
 //
-// HOY: datos locales de prueba. La ruta ficticia sale de docs/ruta0/ y, fuera de los tests, corre la
-// simulación de demo (#36): un colectivo ya en viaje, "Me subí" ficticios y el reloj acelerado.
+// HOY: datos locales de prueba. La ruta ficticia sale de docs/ruta0/. En modo demo (#36) además corre la
+// simulación: colectivos ya en viaje, "Me subí" ficticios y el reloj acelerado.
 // Los "Me subí" que toca el usuario quedan en memoria (se pierden al recargar y no se comparten).
 // CUANDO ESTÉ FIREBASE: se reemplaza la implementación de este archivo por Firestore
 // (#16 conexión, #18 ruta cargada, #21 crearReporte, #22 escuchar el último reporte).
@@ -17,7 +17,8 @@ import { ahora, configurarReloj } from './reloj'
 
 /** Velocidad del reloj de la demo. Se cambia con ?velocidad=1 (tiempo real) … ?velocidad=20 en la URL. */
 const VELOCIDAD_POR_DEFECTO = 5
-export const SIMULACION_ACTIVA = import.meta.env.MODE !== 'test'
+/** La simulación solo corre con `npm run demo` / `npm run demo:pwa` (modo "demo"). Nunca en dev, build ni tests. */
+export const SIMULACION_ACTIVA = import.meta.env.MODE === 'demo'
 
 const paradas = paradasDesdeCsv(rutaFicticiaCsv)
 const inicio = new Date()
