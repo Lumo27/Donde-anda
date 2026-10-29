@@ -8,9 +8,11 @@ import { useMiParada } from '../paradas/useMiParada'
 import { BotonMeSubi } from '../reportes/BotonMeSubi'
 import { aplicarMargen, enOrden, resumenRecorrido } from '../puntualidad/calculos'
 import { estimarLlegadaAMiParada } from '../puntualidad/eta'
+import { posicionEstimada } from '../puntualidad/posicion'
 import { proyectarColectivo } from '../puntualidad/proyeccion'
 import { calcularEstado } from '../puntualidad/puntualidad'
 import { duracion, formatearHora, haceCuanto } from './formato'
+import { RecorridoEnLinea } from './RecorridoEnLinea'
 import { useAhora } from './useAhora'
 
 // Pantalla principal (#27): responde "¿dónde anda y cuánto le falta?" sin navegar.
@@ -44,6 +46,13 @@ export default function PantallaEstado() {
   return (
     <Pantalla>
       <h1 className="sr-only">¿Dónde anda el {recorrido.linea}?</h1>
+      <Tarjeta titulo="Por dónde va (estimado)">
+        <RecorridoEnLinea
+          paradas={enOrden(paradas)}
+          posicion={posicionEstimada(proyeccion, ahora)}
+          miParadaId={miParadaId}
+        />
+      </Tarjeta>
       <Tarjeta titulo="Último reporte">
         {enVivo ? (
           <>
