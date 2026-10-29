@@ -3,6 +3,7 @@ import { Bus } from 'lucide-react'
 import { Boton } from '../../components/Boton'
 import type { Opcion } from '../../components/Selector'
 import { crearReporte } from '../../services/datos'
+import { ahora as horaActual } from '../../services/reloj'
 import { useAhora } from '../estado/useAhora'
 import { guardarUltimoReporteLocal, leerUltimoReporteLocal, minutosDeBloqueo } from './bloqueo'
 import { ModalElegirParada } from './ModalElegirParada'
@@ -36,7 +37,7 @@ export function BotonMeSubi({ recorridoId, opciones, miParadaId }: Props) {
     setEnviando(true)
     try {
       await crearReporte(recorridoId, paradaId)
-      const momento = new Date()
+      const momento = horaActual()
       guardarUltimoReporteLocal(momento)
       setUltimoReporte(momento)
       setAbierto(false)
