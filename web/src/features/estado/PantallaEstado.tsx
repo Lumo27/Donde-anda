@@ -3,26 +3,26 @@ import { ChevronRight } from 'lucide-react'
 import { BadgeEstado } from '../../components/BadgeEstado'
 import { Pantalla } from '../../components/Pantalla'
 import { Tarjeta } from '../../components/Tarjeta'
-import { useRecorrido, useUltimoReporte } from '../../services/datos'
+import { useRecorrido, useReportes } from '../../services/datos'
 import { useMiParada } from '../paradas/useMiParada'
 import { BotonMeSubi } from '../reportes/BotonMeSubi'
 import { aplicarMargen, enOrden, resumenRecorrido } from '../puntualidad/calculos'
-import { estimarLlegadaAMiParada } from '../puntualidad/eta'
-import { posicionEstimada } from '../puntualidad/posicion'
-import { proyectarColectivo } from '../puntualidad/proyeccion'
+import { colectivosEnRecorrido, proximoAMiParada } from '../puntualidad/colectivos'
 import { calcularEstado } from '../puntualidad/puntualidad'
 import { duracion, formatearHora, haceCuanto } from './formato'
 import { RecorridoEnLinea } from './RecorridoEnLinea'
 import { useAhora } from './useAhora'
 
-// Pantalla principal (#27): responde "¿dónde anda y cuánto le falta?" sin navegar.
+// Pantalla principal (#27): responde "¿dónde anda y cuánto le falta?" sin navegar. Sigue a todos los
+// colectivos que están en viaje (#37).
 
 const enlace =
   'inline-flex min-h-12 items-center gap-1 rounded-lg font-bold text-petroleo underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-4 focus-visible:outline-acento'
 
 export default function PantallaEstado() {
   const datos = useRecorrido()
-  const ultimoReporte = useUltimoReporte(datos?.recorrido.id ?? '')
+  const reportes = useReportes(datos?.recorrido.id ?? '')
+  const ultimoReporte = reportes[reportes.length - 1] ?? null
   const miParadaId = useMiParada((s) => s.paradaId)
   const ahora = useAhora()
 
@@ -30,18 +30,14 @@ export default function PantallaEstado() {
   const { recorrido, paradas } = datos
   const nombreDe = (id: string) => paradas.find((p) => p.id === id)?.nombre ?? id
 
-  const proyeccion = proyectarColectivo({ ultimoReporte, paradas, horariosSalida: recorrido.horariosSalida, ahora })
-  const enVivo = proyeccion.fuente === 'en_vivo' && ultimoReporte
-  const estado = enVivo ? calcularEstado(ultimoReporte, recorrido.horariosSalida, paradas) : null
-  const estimacion = estimarLlegadaAMiParada({
-    ultimoReporte,
-    miParadaId,
-    paradas,
-    horariosSalida: recorrido.horariosSalida,
-    ahora,
-  })
+  const { horariosSalida } = recorrido
+  const colectivos = colectivosEnRecorrido({ reportes, paradas, horariosSalida, ahora })
+  // El último reporte se muestra si es de un colectivo que sigue en viaje.
+  const delReporte = colectivos.find((c) => c.ultimoReporte === ultimoReporte)
+  const enVivo = delReporte && ultimoReporte
+  const estado = enVivo ? calcularEstado(ultimoReporte, horariosSalida, paradas) : null
+  const estimacion = proximoAMiParada({ reportes, paradas, horariosSalida, ahora, miParadaId }, colectivos)
   const resumen = resumenRecorrido(aplicarMargen(paradas))
-  const llegadaFacu = proyeccion.fuente === 'sin_servicio' ? null : proyeccion.pasos[proyeccion.pasos.length - 1].llegada
 
   return (
     <Pantalla>
@@ -49,7 +45,7 @@ export default function PantallaEstado() {
       <Tarjeta titulo="Por dónde va (estimado)">
         <RecorridoEnLinea
           paradas={enOrden(paradas)}
-          posicion={posicionEstimada(proyeccion, ahora)}
+          colectivos={colectivos}
           miParadaId={miParadaId}
         />
       </Tarjeta>
@@ -58,7 +54,8 @@ export default function PantallaEstado() {
           <>
             <p className="text-lg font-bold">Alguien se subió en {nombreDe(ultimoReporte.paradaId)}</p>
             <p className="text-gray-700">
-              {haceCuanto(ultimoReporte.creadoEn, ahora)} · {formatearHora(ultimoReporte.creadoEn)}
+              {haceCuanto(ultimoReporte.creadoEn, ahora)} · {formatearHora(ultimoReporte.creadoEn)} · el de las{' '}
+              {delReporte.horario}
             </p>
             {estado && (
               <div className="mt-3">
@@ -76,7 +73,7 @@ export default function PantallaEstado() {
 
       <Tarjeta titulo={`Tu parada: ${nombreDe(miParadaId)}`} destacada>
         <div aria-live="polite">
-          {!estimacion || estimacion.tipo === 'sin_servicio' ? (
+          {!estimacion ? (
             <p className="text-2xl font-extrabold">No hay más colectivos hoy</p>
           ) : (
             <>
@@ -89,8 +86,8 @@ export default function PantallaEstado() {
               </p>
               <p className="text-gray-700">
                 {estimacion.tipo === 'en_vivo'
-                  ? 'Según el último reporte'
-                  : `Estimado por horario (sale ${formatearHora(estimacion.salida)})`}
+                  ? `El de las ${estimacion.horario}, según su último reporte`
+                  : `El de las ${estimacion.horario}, estimado por horario`}
                 {estimacion.minutos < 60 && ` · ~${formatearHora(estimacion.llegada)}`}
               </p>
             </>
@@ -102,11 +99,7 @@ export default function PantallaEstado() {
       </Tarjeta>
 
       <div className="text-gray-700">
-        {proyeccion.fuente !== 'sin_servicio' && proyeccion.salida && llegadaFacu && (
-          <p>
-            Salida {formatearHora(proyeccion.salida)} · Llegada a la facu ~{formatearHora(llegadaFacu)}
-          </p>
-        )}
+        <p>Salidas de hoy: {horariosSalida.join(' · ')}</p>
         <p>
           {resumen.cantidadParadas} paradas · ~{duracion(resumen.segundosTotales)} de recorrido
         </p>

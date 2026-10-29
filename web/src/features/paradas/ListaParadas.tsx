@@ -1,16 +1,16 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { Bus, Star } from 'lucide-react'
 import { Pantalla } from '../../components/Pantalla'
-import { useRecorrido, useUltimoReporte } from '../../services/datos'
+import { useRecorrido, useReportes } from '../../services/datos'
 import { formatearHora } from '../estado/formato'
+import { textoPosicion } from '../estado/textoPosicion'
 import { useAhora } from '../estado/useAhora'
 import { enOrden } from '../puntualidad/calculos'
-import { posicionEstimada } from '../puntualidad/posicion'
-import { proyectarColectivo } from '../puntualidad/proyeccion'
-import { textoPosicion } from '../estado/textoPosicion'
+import { colectivosEnRecorrido, type Colectivo } from '../puntualidad/colectivos'
 import { useMiParada } from './useMiParada'
 
-// Listado de paradas con la hora estimada de paso (#29) y el colectivo bajando por la línea (#36).
+// Listado de paradas (#29): para cada parada, cuándo pasa el PRÓXIMO colectivo. Los colectivos en viaje
+// se ven bajando por la línea (#36, #37).
 
 /** Altura (en px, dentro de la lista) del centro de cada punto de parada. Se mide después de dibujar. */
 function useCentrosDePuntos(cantidad: number) {
@@ -35,9 +35,16 @@ function useCentrosDePuntos(cantidad: number) {
   return { lista, puntos, centros }
 }
 
+/** Dónde dibujar un colectivo, en px dentro de la lista. */
+function alturaDe(c: Colectivo, centros: number[]): number {
+  if (c.posicion.tipo === 'por_salir') return centros[0]
+  const { desde, fraccion } = c.posicion
+  return centros[desde] + fraccion * (centros[desde + 1] - centros[desde])
+}
+
 export default function ListaParadas() {
   const datos = useRecorrido()
-  const ultimoReporte = useUltimoReporte(datos?.recorrido.id ?? '')
+  const reportes = useReportes(datos?.recorrido.id ?? '')
   const miParadaId = useMiParada((s) => s.paradaId)
   const ahora = useAhora()
   const { lista, puntos, centros } = useCentrosDePuntos(datos?.paradas.length ?? 0)
@@ -45,65 +52,68 @@ export default function ListaParadas() {
   if (!datos) return <Pantalla volverA="/">Cargando…</Pantalla>
   const { recorrido } = datos
   const paradas = enOrden(datos.paradas)
-  const proyeccion = proyectarColectivo({ ultimoReporte, paradas, horariosSalida: recorrido.horariosSalida, ahora })
-  const pasos = proyeccion.fuente === 'sin_servicio' ? [] : proyeccion.pasos
-
-  const fuente =
-    proyeccion.fuente === 'en_vivo'
-      ? 'En vivo, según el último reporte'
-      : proyeccion.fuente === 'por_horario'
-        ? `Estimado por horario (sale ${formatearHora(proyeccion.salida)})`
-        : 'No hay más colectivos hoy'
-
-  // Dónde va el colectivo, en px dentro de la lista (null = no se dibuja).
-  const posicion = posicionEstimada(proyeccion, ahora)
+  const colectivos = colectivosEnRecorrido({ reportes, paradas, horariosSalida: recorrido.horariosSalida, ahora })
   const ultima = paradas.length - 1
-  const yColectivo =
-    centros.length === paradas.length
-      ? posicion.tipo === 'en_viaje'
-        ? centros[posicion.desde] + posicion.fraccion * (centros[posicion.desde + 1] - centros[posicion.desde])
-        : posicion.tipo === 'por_salir'
-          ? centros[0]
-          : null
-      : null
+  const medido = centros.length === paradas.length
 
   return (
     <Pantalla volverA="/">
       <div>
         <h1 className="text-2xl font-extrabold">Paradas</h1>
         <p className="font-bold text-gray-700">{recorrido.nombre}</p>
-        <p className="text-gray-700">{fuente}</p>
-        <p className="mt-2 font-bold">{textoPosicion(paradas, posicion)}</p>
+        {colectivos.length === 0 ? (
+          <p className="mt-2 font-bold">No hay más colectivos hoy</p>
+        ) : (
+          <ul className="mt-2">
+            {colectivos.map((c) => (
+              <li key={c.horario}>
+                <span className="font-bold">El de las {c.horario}:</span> {textoPosicion(paradas, c.posicion)}
+                {c.proyeccion.fuente === 'en_vivo' ? ' (en vivo)' : ' (por horario)'}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <ol ref={lista} className="relative flex flex-col">
-        {/* La línea del recorrido y el colectivo, por detrás/encima de los puntos (decorativo). */}
-        {centros.length === paradas.length && (
+        {/* La línea del recorrido y los colectivos (decorativo: lo mismo está en texto arriba). */}
+        {medido && (
           <span
             aria-hidden
             className="absolute left-4 w-1 -translate-x-1/2 rounded-full bg-gray-300"
             style={{ top: centros[0], height: centros[ultima] - centros[0] }}
           />
         )}
-        {yColectivo !== null && (
-          <span
-            aria-hidden
-            className="absolute left-4 z-10 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-lg bg-acento text-tinta shadow-md ring-2 ring-white transition-[top] duration-1000 ease-linear"
-            style={{ top: yColectivo }}
-          >
-            <Bus className="h-5 w-5" strokeWidth={2.5} />
-          </span>
-        )}
+        {medido &&
+          colectivos.map((c) => (
+            <span
+              key={c.horario}
+              aria-hidden
+              className={[
+                'absolute left-4 z-10 flex h-8 w-8 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-lg shadow-md ring-2 ring-white transition-[top] duration-1000 ease-linear',
+                c.posicion.tipo === 'por_salir' ? 'border-2 border-dashed border-tinta bg-white' : 'bg-acento',
+              ].join(' ')}
+              style={{ top: alturaDe(c, centros) }}
+            >
+              <Bus className="h-5 w-5 text-tinta" strokeWidth={2.5} />
+            </span>
+          ))}
+
         {paradas.map((parada, i) => {
-          const paso = pasos[i]
           const esMia = parada.id === miParadaId
-          const esReportada = proyeccion.fuente === 'en_vivo' && proyeccion.paradaReportadaId === parada.id
-          const yaPaso = paso?.yaPaso && !esReportada
-          const esUltima = i === paradas.length - 1
+          // El próximo colectivo que todavía no pasó por esta parada.
+          const proximo = colectivos
+            .map((c) => ({ c, llegada: c.proyeccion.pasos[i]?.yaPaso ? null : c.proyeccion.pasos[i]?.llegada }))
+            .filter((x): x is { c: Colectivo; llegada: Date } => !!x.llegada)
+            .sort((a, b) => a.llegada.getTime() - b.llegada.getTime())[0]
+          const reportadoAca = colectivos.find((c) => c.ultimoReporte?.paradaId === parada.id)?.ultimoReporte
+          const yaPaso = !proximo
+          const esUltima = i === ultima
 
           const etiquetas = [
-            esReportada && 'último reporte: se subió alguien acá',
+            reportadoAca && `se subió alguien acá a las ${formatearHora(reportadoAca.creadoEn)}`,
             esMia && 'tu parada',
+            proximo && colectivos.length > 1 && `el de las ${proximo.c.horario}`,
             yaPaso && 'ya pasó',
             esUltima && 'llegada a la facu',
           ].filter(Boolean)
@@ -116,7 +126,6 @@ export default function ListaParadas() {
                 esMia ? 'border-2 border-tinta bg-gray-100' : '',
               ].join(' ')}
             >
-              {/* Línea del recorrido: punto lleno = todavía no pasó o es el reportado. */}
               <span
                 aria-hidden
                 ref={(el) => {
@@ -124,7 +133,7 @@ export default function ListaParadas() {
                 }}
                 className={[
                   'relative h-4 w-4 shrink-0 rounded-full border-2',
-                  yaPaso ? 'border-gray-400 bg-white' : esReportada ? 'border-acento bg-acento' : 'border-tinta bg-tinta',
+                  yaPaso ? 'border-gray-400 bg-white' : reportadoAca ? 'border-acento bg-acento' : 'border-tinta bg-tinta',
                 ].join(' ')}
               />
               <div className="min-w-0 flex-1">
@@ -135,13 +144,13 @@ export default function ListaParadas() {
                 {etiquetas.length > 0 && <p className="text-sm text-gray-700">{etiquetas.join(' · ')}</p>}
               </div>
               <p className={['tabular-nums', yaPaso ? 'text-gray-600' : 'font-bold'].join(' ')}>
-                {paso?.llegada ? `${esReportada ? '' : '~'}${formatearHora(paso.llegada)}` : ''}
+                {proximo ? `~${formatearHora(proximo.llegada)}` : ''}
               </p>
             </li>
           )
         })}
       </ol>
-      <p className="text-sm text-gray-700">~ = hora estimada.</p>
+      <p className="text-sm text-gray-700">~ = hora estimada del próximo colectivo en pasar.</p>
     </Pantalla>
   )
 }

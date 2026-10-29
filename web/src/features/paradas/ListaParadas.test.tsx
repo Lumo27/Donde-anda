@@ -12,6 +12,9 @@ const renderizar = () =>
       <ListaParadas />
     </MemoryRouter>,
   )
+/** Las paradas (la lista numerada), no la lista de colectivos de arriba. */
+const paradasEnPantalla = () =>
+  within(screen.getAllByRole('list').find((l) => l.tagName === 'OL')!).getAllByRole('listitem')
 
 beforeEach(() => {
   vi.useFakeTimers({ toFake: ['Date'] })
@@ -24,25 +27,26 @@ afterEach(() => {
 })
 
 describe('ListaParadas (#29)', () => {
-  it('muestra las 10 paradas en orden con hora estimada por horario', () => {
+  it('muestra las 10 paradas en orden con la hora del próximo colectivo', () => {
     renderizar()
-    const items = screen.getAllByRole('listitem')
+    const items = paradasEnPantalla()
     expect(items).toHaveLength(10)
-    expect(screen.getByText('Estimado por horario (sale 07:00)')).toBeTruthy()
-    // A las 07:30 el de las 07:00 ya pasó por Alberti (07:14) y todavía no por la 8 (07:39)
-    expect(within(items[3]).getByText(/ya pasó/)).toBeTruthy()
-    expect(within(items[7]).getByText('tu parada')).toBeTruthy()
+    // El de las 07:00 en viaje y el de las 08:30 por salir, los dos estimados por horario
+    expect(screen.getAllByText(/\(por horario\)/)).toHaveLength(2)
+    // A las 07:30 el de las 07:00 ya pasó por Alberti (07:14) y todavía no por la 8 (07:39).
+    // Por Alberti el próximo es el de las 08:30.
+    expect(within(items[3]).getByText('~08:44')).toBeTruthy()
+    expect(within(items[7]).getByText(/tu parada/)).toBeTruthy()
     expect(within(items[7]).getByText('~07:39')).toBeTruthy()
-    expect(within(items[9]).getByText('llegada a la facu')).toBeTruthy()
+    expect(within(items[9]).getByText(/llegada a la facu/)).toBeTruthy()
   })
 
   it('se actualiza sola con un "Me subí" y marca dónde fue', async () => {
     renderizar()
     vi.setSystemTime(new Date('2026-10-26T07:34:00-03:00'))
     await act(() => crearReporte('510-ida', 'del-viso'))
-    expect(screen.getByText('En vivo, según el último reporte')).toBeTruthy()
-    const delViso = screen.getAllByRole('listitem')[6]
-    expect(within(delViso).getByText(/último reporte/)).toBeTruthy()
-    expect(within(delViso).getByText('07:34')).toBeTruthy()
+    expect(screen.getByText(/\(en vivo\)/)).toBeTruthy()
+    const delViso = paradasEnPantalla()[6]
+    expect(within(delViso).getByText(/se subió alguien acá a las 07:34/)).toBeTruthy()
   })
 })
