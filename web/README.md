@@ -12,6 +12,14 @@ PWA en React 18 + Vite + TypeScript (strict) + Tailwind. El contexto del proyect
 | `npx vitest run` | Corre los tests una sola vez |
 | `npm run build` | Chequea tipos y arma la versión de producción en `dist/` |
 | `npm run lint` | Revisa el código con ESLint |
+| `npm run demo` | La app en **modo demo** (#36): colectivos ficticios en viaje y "Me subí" que llegan solos. Se abre también desde el celular por Wi-Fi |
+| `npm run demo:pwa` | Lo mismo, pero como PWA de producción en http://IP-DE-LA-COMPU:4173 |
+
+### Modo demo
+
+Sirve para mostrar el prototipo sin Firebase ni gente real. Hay dos colectivos en viaje (el 2º salió 15 min después que el 1º) y uno por salir. El reloj corre 5 veces más rápido; se cambia con `?velocidad=1` (tiempo real) hasta `?velocidad=60` en la dirección. El botón "Reiniciar" del cartel vuelve a empezar.
+
+La simulación **solo existe en modo demo**: `npm run dev` y `npm run build` no la incluyen, así que nunca llega a producción. El código está en `src/features/simulacion/`.
 
 ## Carpetas
 

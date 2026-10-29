@@ -9,25 +9,23 @@ import { enOrden, fechaEnArgentina, segundosHastaSalir } from '../puntualidad/ca
 const POSICIONES_QUE_REPORTAN = [1, 3, 4, 6, 7]
 
 /** Segundos de atraso que suma cada viaje en cada parada: el 1º va atrasándose, el 2º viene adelantado. */
-const ATRASO_POR_PARADA_SEG = [80, -20, 30]
+const ATRASO_POR_PARADA_SEG = [60, -20, 30]
 
-/** Cuánto antes de "ahora" salió el colectivo que ya está en viaje al abrir la demo. */
-const MINUTOS_DE_VIAJE_AL_INICIAR = 23
-const MINUTOS_ENTRE_SALIDAS = 45
-const CANTIDAD_DE_SALIDAS = 3
+/**
+ * Salidas de la demo, en minutos respecto de cuando se abre: el 1º salió hace 23 min, el 2º salió
+ * 15 min después que el 1º (hace 8 min) y el 3º todavía no salió.
+ */
+const SALIDAS_RESPECTO_DEL_INICIO_MIN = [-23, -8, 37]
 
 /** "HH:mm" en hora de Argentina (UTC-3). */
 function horaArgentina(momento: Date): string {
   return new Date(momento.getTime() - 3 * 3600_000).toISOString().slice(11, 16)
 }
 
-/** Horarios de salida de la demo: el primero ya salió hace un rato y los demás vienen después. */
+/** Horarios de salida de la demo: dos colectivos ya en viaje (separados 15 min) y uno por salir. */
 export function horariosDeSimulacion(inicio: Date): string[] {
-  const minuto = new Date(Math.floor(inicio.getTime() / 60000) * 60000)
-  const primera = minuto.getTime() - MINUTOS_DE_VIAJE_AL_INICIAR * 60000
-  return Array.from({ length: CANTIDAD_DE_SALIDAS }, (_, i) =>
-    horaArgentina(new Date(primera + i * MINUTOS_ENTRE_SALIDAS * 60000)),
-  )
+  const minuto = Math.floor(inicio.getTime() / 60000) * 60000
+  return SALIDAS_RESPECTO_DEL_INICIO_MIN.map((m) => horaArgentina(new Date(minuto + m * 60000)))
 }
 
 /**
