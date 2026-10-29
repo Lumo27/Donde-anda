@@ -59,10 +59,11 @@ export function RecorridoEnLinea({ paradas, colectivos, miParadaId }: Props) {
           <span
             key={c.horario}
             className={[
-              'absolute top-0 flex h-8 -translate-x-1/2 items-center gap-1 rounded-lg px-1.5 text-xs font-extrabold shadow transition-[left] duration-1000 ease-linear',
+              'absolute top-0 flex h-8 items-center gap-1 rounded-lg px-1.5 text-xs font-extrabold shadow transition-[left,transform] duration-1000 ease-linear',
               c.posicion.tipo === 'por_salir' ? 'border-2 border-dashed border-tinta bg-white text-tinta' : 'bg-acento text-tinta',
             ].join(' ')}
-            style={{ left: enLinea(progresoDe(c)) }}
+            // Centrada sobre su posición, pero en las puntas se corre hacia adentro para no salirse de la tarjeta.
+            style={{ left: enLinea(progresoDe(c)), transform: `translateX(-${progresoDe(c) * 100}%)` }}
           >
             <Bus className="h-4 w-4" strokeWidth={2.5} />
             {c.horario}
