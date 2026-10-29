@@ -106,14 +106,17 @@ export default function ListaParadas() {
             .map((c) => ({ c, llegada: c.proyeccion.pasos[i]?.yaPaso ? null : c.proyeccion.pasos[i]?.llegada }))
             .filter((x): x is { c: Colectivo; llegada: Date } => !!x.llegada)
             .sort((a, b) => a.llegada.getTime() - b.llegada.getTime())[0]
-          const reportadoAca = colectivos.find((c) => c.ultimoReporte?.paradaId === parada.id)?.ultimoReporte
+          const reportadoAca = colectivos.find((c) => c.ultimoReporte?.paradaId === parada.id)
+          const variosColectivos = colectivos.length > 1
           const yaPaso = !proximo
           const esUltima = i === ultima
 
           const etiquetas = [
-            reportadoAca && `se subió alguien acá a las ${formatearHora(reportadoAca.creadoEn)}`,
+            reportadoAca &&
+              `se subió alguien a las ${formatearHora(reportadoAca.ultimoReporte!.creadoEn)}` +
+                (variosColectivos ? ` (el de las ${reportadoAca.horario})` : ''),
             esMia && 'tu parada',
-            proximo && colectivos.length > 1 && `el de las ${proximo.c.horario}`,
+            proximo && variosColectivos && `próximo: el de las ${proximo.c.horario}`,
             yaPaso && 'ya pasó',
             esUltima && 'llegada a la facu',
           ].filter(Boolean)
