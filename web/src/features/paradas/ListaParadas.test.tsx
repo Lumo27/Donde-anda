@@ -47,6 +47,6 @@ describe('ListaParadas (#29)', () => {
     await act(() => crearReporte('510-ida', 'del-viso'))
     expect(screen.getByText(/\(en vivo\)/)).toBeTruthy()
     const delViso = paradasEnPantalla()[6]
-    expect(within(delViso).getByText(/se subió alguien acá a las 07:34/)).toBeTruthy()
+    expect(within(delViso).getByText(/se subió alguien a las 07:34 \(el de las 07:00\)/)).toBeTruthy()
   })
 })
