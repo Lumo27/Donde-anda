@@ -43,7 +43,7 @@ Diferencias respecto a Splitwaisito (no se usan en este proyecto, al menos no en
   /src
     /components → sistema de diseño base (Botón, Tarjeta, Badge de estado, Input) + reutilizables
     /features   → una carpeta por feature: auth (PantallaLogin), estado, paradas, reportes (botón "Me subí"), puntualidad
-    /services   → integración con Firebase (firebase.ts, auth.ts, firestore.ts)
+    /services   → datos.ts (ÚNICA fuente de datos de las pantallas: hoy local, después Firestore), reloj.ts (hora de la app); más adelante firebase.ts, auth.ts
     /types      → modelos.ts (Recorrido, Parada, Reporte)
 /functions      → Cloud Functions (si hace falta calcular puntualidad o agregar reportes del lado server)
 /scripts        → scripts sueltos (ej. cargar-ruta0.ts)
@@ -51,7 +51,9 @@ Diferencias respecto a Splitwaisito (no se usan en este proyecto, al menos no en
 firestore.rules, firebase.json
 ```
 
-Modelo Firestore: `recorridos/{id}` (nombre, linea, horariosSalida) → `paradas/{id}` (orden, nombre, segundosDesdeAnterior, segundosDetenido); `reportes/{id}` (recorridoId, paradaId, creadoEn). Los cálculos (`features/puntualidad/calculos.ts`, `puntualidad.ts`, `eta.ts`) son funciones puras con tests en Vitest. Los márgenes van en `features/puntualidad/config.ts`.
+Modelo Firestore: `recorridos/{id}` (nombre, linea, horariosSalida) → `paradas/{id}` (orden, nombre, segundosDesdeAnterior, segundosDetenido); `reportes/{id}` (recorridoId, paradaId, creadoEn). Los cálculos (`features/puntualidad/calculos.ts`, `puntualidad.ts`, `eta.ts`) son funciones puras con tests en Vitest. Los márgenes van en `features/puntualidad/config.ts`. Varios colectivos en viaje a la vez: `features/puntualidad/colectivos.ts` asigna cada reporte anónimo a la salida que mejor lo explica.
+
+Para conectar Firebase se reemplaza la implementación de `services/datos.ts` (`useRecorrido`, `useReportes`, `crearReporte`) sin cambiar sus firmas: las pantallas no se tocan. Las horas se piden a `services/reloj.ts` (`ahora()`), no a `new Date()` suelto.
 
 ## Conceptos de dominio (ver PLANNING.md / README.md para el detalle completo)
 
