@@ -23,5 +23,3 @@ dist-ssr
 *.sln
 *.sw?
 
-# Build de la demo (npm run demo:pwa)
-dist-demo

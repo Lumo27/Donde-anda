@@ -2,45 +2,25 @@ import { create } from 'zustand'
 import rutaFicticiaCsv from '../../../docs/ruta0/ruta0-FICTICIA.csv?raw'
 import { useAhora } from '../features/estado/useAhora'
 import { paradasDesdeCsv } from '../features/paradas/ruta0Csv'
-import { horariosDeSimulacion, reportesSimulados } from '../features/simulacion/simulacion'
 import type { Parada, Recorrido, Reporte } from '../types/modelos'
-import { ahora, configurarReloj } from './reloj'
+import { ahora } from './reloj'
 
 // Fuente de datos de la app. Las pantallas piden todo acá y no saben de dónde viene.
 //
-// HOY: datos locales de prueba. La ruta ficticia sale de docs/ruta0/. En modo demo (#36) además corre la
-// simulación: colectivos ya en viaje, "Me subí" ficticios y el reloj acelerado.
-// Los "Me subí" que toca el usuario quedan en memoria (se pierden al recargar y no se comparten).
-// CUANDO ESTÉ FIREBASE: se reemplaza la implementación de este archivo por Firestore
-// (#16 conexión, #18 ruta cargada, #21 crearReporte, #22 escuchar el último reporte).
-// Las firmas de las funciones se mantienen, así que las pantallas no cambian.
-
-/** Velocidad del reloj de la demo. Se cambia con ?velocidad=1 (tiempo real) … ?velocidad=20 en la URL. */
-const VELOCIDAD_POR_DEFECTO = 5
-/** La simulación solo corre con `npm run demo` / `npm run demo:pwa` (modo "demo"). Nunca en dev, build ni tests. */
-export const SIMULACION_ACTIVA = import.meta.env.MODE === 'demo'
-
-const paradas = paradasDesdeCsv(rutaFicticiaCsv)
-const inicio = new Date()
-
-if (SIMULACION_ACTIVA) {
-  const pedida = Number(new URLSearchParams(window.location.search).get('velocidad'))
-  configurarReloj(inicio, pedida > 0 && pedida <= 60 ? pedida : VELOCIDAD_POR_DEFECTO)
-  // Cada vez que arranca la demo, se libera el bloqueo de "Me subí" de la demo anterior.
-  try {
-    localStorage.removeItem('donde-anda:ultimo-me-subi')
-  } catch {
-    // sin almacenamiento: no hay nada que liberar
-  }
-}
+// HOY: datos locales de prueba. La ruta ficticia sale de docs/ruta0/ y los "Me subí" quedan en memoria
+// (se pierden al recargar y no se comparten entre celulares).
+// CUANDO ESTÉ FIREBASE: se reemplaza la implementación de este archivo por Firestore, sin cambiar las firmas
+// de las funciones, así que las pantallas no cambian:
+//   - useRecorrido → leer recorridos/510-ida y sus paradas (#16, #18)
+//   - useReportes  → escuchar con onSnapshot los reportes del día del recorrido (#22)
+//   - crearReporte → addDoc con { recorridoId, paradaId, creadoEn: serverTimestamp() } y NADA más (#21)
 
 const RECORRIDO_FICTICIO: Recorrido = {
   id: '510-ida',
   nombre: '510 → Parque Industrial',
   linea: '510',
   sentido: 'ida',
-  // Mock (ver docs/recorrido.md). En la demo, horarios armados para que haya un viaje en curso.
-  horariosSalida: SIMULACION_ACTIVA ? horariosDeSimulacion(inicio) : ['07:00', '08:30', '13:00', '17:30'],
+  horariosSalida: ['07:00', '08:30', '13:00', '17:30'], // mock, ver docs/recorrido.md
   ficticia: true,
 }
 
@@ -49,25 +29,24 @@ export interface DatosRecorrido {
   paradas: Parada[]
 }
 
-const DATOS_FICTICIOS: DatosRecorrido = { recorrido: RECORRIDO_FICTICIO, paradas }
-
-const REPORTES_SIMULADOS = SIMULACION_ACTIVA
-  ? reportesSimulados(RECORRIDO_FICTICIO.id, paradas, RECORRIDO_FICTICIO.horariosSalida, inicio)
-  : []
+const DATOS_FICTICIOS: DatosRecorrido = {
+  recorrido: RECORRIDO_FICTICIO,
+  paradas: paradasDesdeCsv(rutaFicticiaCsv),
+}
 
 /** El recorrido del MVP con sus paradas. Devuelve null mientras carga (con Firebase va a tardar un instante). */
 export function useRecorrido(): DatosRecorrido | null {
   return DATOS_FICTICIOS
 }
 
-// Reportes del usuario, en memoria. Solo parada y hora: igual que en Firestore, nada de quién lo hizo.
+// Reportes en memoria. Solo parada y hora: igual que en Firestore, nada de quién lo hizo.
 const useReportesLocales = create<{ reportes: Reporte[] }>(() => ({ reportes: [] }))
 
 /** Los "Me subí" del recorrido que ya ocurrieron, del más viejo al más nuevo. Se actualiza solo. */
 export function useReportes(recorridoId: string): Reporte[] {
   const momento = useAhora()
-  const propios = useReportesLocales((s) => s.reportes)
-  return [...REPORTES_SIMULADOS, ...propios]
+  const reportes = useReportesLocales((s) => s.reportes)
+  return reportes
     .filter((r) => r.recorridoId === recorridoId && r.creadoEn <= momento)
     .sort((a, b) => a.creadoEn.getTime() - b.creadoEn.getTime())
 }
