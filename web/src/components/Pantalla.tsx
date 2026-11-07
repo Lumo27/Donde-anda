@@ -1,7 +1,9 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import { ChevronLeft, MapPin, TriangleAlert } from 'lucide-react'
+import { ChevronLeft, LogOut, MapPin, TriangleAlert } from 'lucide-react'
+import { cerrarSesion } from '../services/auth'
 import { useRecorrido } from '../services/datos'
+import { DATOS_LOCALES } from '../services/fuente'
 
 // Marco común de todas las pantallas: encabezado, aviso de tiempos estimados y ancho de celular.
 
@@ -29,6 +31,16 @@ export function Pantalla({ children, volverA }: Props) {
             <MapPin aria-hidden className="h-6 w-6 text-acento" strokeWidth={2.5} />
             Donde anda?
           </p>
+        )}
+        {!DATOS_LOCALES && (
+          <button
+            type="button"
+            onClick={() => void cerrarSesion()}
+            className="ml-auto flex min-h-12 items-center gap-1 rounded-lg px-2 text-sm font-bold text-gray-700 focus-visible:outline focus-visible:outline-4 focus-visible:outline-acento"
+          >
+            <LogOut aria-hidden className="h-4 w-4" strokeWidth={2.5} />
+            Salir
+          </button>
         )}
       </header>
 
