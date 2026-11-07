@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
-import { idDeParada, paradasDesdeCsv, segundosDelDia } from './ruta0Csv'
+import { idDeParada, paradasDesdeCsv, segundosDelDia, sumarCoordenadas } from './ruta0Csv'
 
 const csvFicticio = readFileSync(
   new URL('../../../../docs/ruta0/ruta0-FICTICIA.csv', import.meta.url),
@@ -48,5 +48,17 @@ describe('paradasDesdeCsv con la ruta ficticia', () => {
     const delViso = paradas.find((p) => p.id === 'del-viso')!
     expect(delViso.segundosDetenido).toBe(65) // 07:31:00 → 07:32:05
     expect(paradas[2].segundosDetenido).toBe(0) // no paró
+  })
+})
+
+describe('sumarCoordenadas (#38)', () => {
+  const paradas = paradasDesdeCsv(csvFicticio).slice(0, 2)
+
+  it('suma lat y lng a la parada del mismo orden y nombre', () => {
+    const csv = 'orden,parada,lat,lng,fuente\n1,Primera parada,-34.46,-58.77,cruce\n2,Otra parada,-34.45,-58.78,cruce'
+    const r = sumarCoordenadas(paradas, csv)
+    expect(r[0]).toMatchObject({ lat: -34.46, lng: -58.77 })
+    // El nombre de la 2 no coincide: no se usa
+    expect(r[1].lat).toBeUndefined()
   })
 })

@@ -5,7 +5,7 @@ import { useRecorrido, useReportes } from '../../services/datos'
 import { formatearHora } from '../estado/formato'
 import { textoPosicion } from '../estado/textoPosicion'
 import { useAhora } from '../estado/useAhora'
-import { enOrden } from '../puntualidad/calculos'
+import { enOrden, horariosDelDia } from '../puntualidad/calculos'
 import { colectivosEnRecorrido, type Colectivo } from '../puntualidad/colectivos'
 import { useMiParada } from './useMiParada'
 
@@ -52,7 +52,8 @@ export default function ListaParadas() {
   if (!datos) return <Pantalla volverA="/">Cargando…</Pantalla>
   const { recorrido } = datos
   const paradas = enOrden(datos.paradas)
-  const colectivos = colectivosEnRecorrido({ reportes, paradas, horariosSalida: recorrido.horariosSalida, ahora })
+  const horariosSalida = horariosDelDia(recorrido, ahora)
+  const colectivos = colectivosEnRecorrido({ reportes, paradas, horariosSalida, ahora })
   const ultima = paradas.length - 1
   const medido = centros.length === paradas.length
 
@@ -62,7 +63,7 @@ export default function ListaParadas() {
         <h1 className="text-2xl font-extrabold">Paradas</h1>
         <p className="font-bold text-gray-700">{recorrido.nombre}</p>
         {colectivos.length === 0 ? (
-          <p className="mt-2 font-bold">No hay más colectivos hoy</p>
+          <p className="mt-2 font-bold">{horariosSalida.length > 0 ? 'No hay más colectivos hoy' : 'Hoy no hay servicio'}</p>
         ) : (
           <ul className="mt-2">
             {colectivos.map((c) => (

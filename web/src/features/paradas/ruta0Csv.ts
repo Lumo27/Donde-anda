@@ -58,3 +58,22 @@ export function paradasDesdeCsv(texto: string): Parada[] {
     }
   })
 }
+
+/**
+ * Lee docs/ruta0/paradas-coordenadas.csv (orden,parada,lat,lng,fuente) y le suma la ubicación a cada parada
+ * del mismo orden. Si el nombre no coincide, no la usa (la ruta y las coordenadas quedaron desfasadas).
+ */
+export function sumarCoordenadas(paradas: Parada[], textoCsv: string): Parada[] {
+  const porOrden = new Map<number, { nombre: string; lat: number; lng: number }>()
+  for (const fila of textoCsv.split(/\r?\n/).slice(1)) {
+    const [orden, nombre, lat, lng] = fila.split(',')
+    if (!orden || !lat || !lng) continue
+    porOrden.set(Number(orden), { nombre: nombre.trim(), lat: Number(lat), lng: Number(lng) })
+  }
+  return paradas.map((p) => {
+    const c = porOrden.get(p.orden)
+    return c && c.nombre === p.nombre && Number.isFinite(c.lat) && Number.isFinite(c.lng)
+      ? { ...p, lat: c.lat, lng: c.lng }
+      : p
+  })
+}

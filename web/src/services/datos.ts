@@ -1,7 +1,8 @@
 import { create } from 'zustand'
+import coordenadasCsv from '../../../docs/ruta0/paradas-coordenadas.csv?raw'
 import rutaCsv from '../../../docs/ruta0/ruta0-RAMAL9-ESTIMADA.csv?raw'
 import { useAhora } from '../features/estado/useAhora'
-import { paradasDesdeCsv } from '../features/paradas/ruta0Csv'
+import { paradasDesdeCsv, sumarCoordenadas } from '../features/paradas/ruta0Csv'
 import type { Parada, Recorrido, Reporte } from '../types/modelos'
 import { ahora } from './reloj'
 
@@ -24,6 +25,17 @@ const RECORRIDO: Recorrido = {
   horariosSalida: ['06:50', '12:20', '16:20'],
   // Tiempos entre paradas estimados hasta medir la ruta 0 (#12): la app muestra el aviso.
   ficticia: true,
+  // Todos los días (0 = domingo … 6 = sábado). Para probar solo los lunes: [1].
+  diasServicio: [0, 1, 2, 3, 4, 5, 6],
+  // Zonas para elegir "mi parada" (#38), por número de parada (ver docs/recorrido.md).
+  tramos: [
+    { nombre: 'Alberti – Del Viso', desde: 1, hasta: 21 },
+    { nombre: 'Del Viso – Panamericana', desde: 22, hasta: 33 },
+    { nombre: 'Panamericana – Villa Rosa', desde: 34, hasta: 50 },
+    { nombre: 'Villa Rosa – Panamericana', desde: 51, hasta: 60 },
+    { nombre: 'Panamericana – Pilar', desde: 61, hasta: 71 },
+    { nombre: 'Pilar – Parque Industrial', desde: 72, hasta: 77 },
+  ],
 }
 
 export interface DatosRecorrido {
@@ -33,7 +45,7 @@ export interface DatosRecorrido {
 
 const DATOS: DatosRecorrido = {
   recorrido: RECORRIDO,
-  paradas: paradasDesdeCsv(rutaCsv),
+  paradas: sumarCoordenadas(paradasDesdeCsv(rutaCsv), coordenadasCsv),
 }
 
 /** El recorrido del MVP con sus paradas. Devuelve null mientras carga (con Firebase va a tardar un instante). */
