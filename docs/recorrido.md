@@ -42,7 +42,7 @@ Sale de **Estación Alberti**, cruza Alberti (Santa Rita, Plaza San Martín, Pad
 
 ### 2. Por Caamaño hasta Villa Rosa y vuelta a la Panamericana (paradas 34 a 59)
 
-Fuente: **Moovit, 510 R9 "Villa del Carmen"** (paradas 47 a 22 de esa línea, **al revés**, porque esa línea va de Pilar hacia Alberti). Hay que confirmar en la calle que en este sentido para en los mismos lugares.
+Fuente: **Moovit, 510 R9 "Villa del Carmen"** (paradas 47 a 22 de esa línea, **al revés**, porque esa línea va de Pilar hacia Alberti). ✅ Confirmado por el grupo: por Villa Rosa hace el mismo recorrido en los dos sentidos, con las mismas paradas en orden inverso.
 
 Baja en **Caamaño**: Pueblo Caamaño, Barrio Haras del Pilar, Saint Matthew's, Club de Campo Chateau, Caamaño y Manzoni, Caamaño y Fosatti. Sigue por **Verazzi** y toma **Quinquela Martín**, pasa por Pilar del Este, recorre **Av. Honorio Pueyrredón** y llega a la **Estación Villa Rosa** (Belgrano Norte, parada 50). Da la vuelta por adentro (Moreno, Honorio Pueyrredón y Sánchez de Loria, **Chacabuco**) y pasa por el **Colegio St. John's** (parada 59).
 
@@ -63,7 +63,7 @@ Fuente: **descripción del grupo**. Son referencias, todavía sin nombre oficial
 | 74 | Bajada Autopista y Pergamino (Colectora Ruta 8) | Baja por la colectora de la Ruta Nacional 8 |
 | 75 | Avenida Doctor Arturo Frondizi | Por Frondizi derecho |
 | 76 | Rotonda de la calle 9 | Entra por La Montonera |
-| 77 | **Sede Parque Industrial (El Cenáculo)** | Destino. ⏳ Confirmar que El Cenáculo es la sede |
+| 77 | **Sede Parque Industrial (El Cenáculo)** | Destino. ✅ Confirmado: El Cenáculo es la sede |
 
 ---
 
@@ -76,8 +76,7 @@ En la estimación de la ida, el tramo equivalente (Valentín Gómez y San Cayeta
 ## Qué falta confirmar
 
 - **Tiempos de cada parada:** se miden en la ruta 0 (#12). Hoy el viaje estimado dura **85 minutos** (12:20 → 13:45), con 30 s detenido en cada parada (el mismo piso que usa el margen, para que no infle de más). Solo la salida de Alberti y el paso por Del Viso son reales.
-- **Tramo 2:** que en este sentido el colectivo para en las mismas paradas que la línea que va al revés.
-- **Tramo 4:** los nombres oficiales de esas paradas y que **El Cenáculo** sea la sede.
+- **Tramo 4:** los nombres oficiales de las paradas 72 a 76. Esas líneas de Moovit no hacen ese tramo, así que hoy son referencias del grupo.
 - **Qué paradas usan los estudiantes:** sirve para el piloto; la app igual muestra todas.
 
 ---
