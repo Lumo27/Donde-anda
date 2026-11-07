@@ -4,8 +4,28 @@
       "collectionGroup": "reportes",
       "queryScope": "COLLECTION",
       "fields": [
-        { "fieldPath": "recorridoId", "order": "ASCENDING" },
-        { "fieldPath": "creadoEn", "order": "DESCENDING" }
+        {
+          "fieldPath": "recorridoId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "creadoEn",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "reportes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "recorridoId",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "creadoEn",
+          "order": "ASCENDING"
+        }
       ]
     }
   ],
