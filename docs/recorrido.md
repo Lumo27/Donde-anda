@@ -67,6 +67,34 @@ Fuente: **descripción del grupo**. Son referencias, todavía sin nombre oficial
 
 ---
 
+## Zonas (para elegir "mi parada")
+
+Al elegir su parada, la persona primero dice de qué zona está más cerca, o usa "Buscar la parada más cercana" con su ubicación, o mira la lista completa (#38).
+
+| Zona | Paradas |
+|---|---|
+| Alberti – Del Viso | 1 a 21 (hasta Estación Del Viso) |
+| Del Viso – Panamericana | 22 a 33 (hasta 12 de Octubre y Caamaño) |
+| Panamericana – Villa Rosa | 34 a 50 (hasta Estación Villa Rosa) |
+| Villa Rosa – Panamericana | 51 a 60 (hasta 12 de Octubre y Chacabuco) |
+| Panamericana – Pilar | 61 a 71 (hasta Paseo Champagnat) |
+| Pilar – Parque Industrial | 72 a 77 (hasta la sede) |
+
+## Ubicación de las paradas
+
+[`ruta0/paradas-coordenadas.csv`](ruta0/paradas-coordenadas.csv) tiene la latitud y longitud de cada parada, calculadas con las calles de OpenStreetMap ([`scripts/coordenadas-paradas.py`](../scripts/coordenadas-paradas.py)). La columna `fuente` dice cómo se obtuvo cada una:
+- **Cruce de calles (42):** el punto donde se cruzan las dos calles en el mapa.
+- **Referencia de calles (3):** tramo final (Pergamino, Frondizi, rotonda de la calle 9).
+- **Aproximada (32):** estaciones, colegios, barrios y esquinas que no aparecen; se ubican entre la parada anterior y la siguiente (error de una o dos cuadras).
+
+👉 **En la ruta 0 (#12), marcar con el GPS del celular la ubicación de cada parada** y reemplazar las aproximadas.
+
+Datos de calles © OpenStreetMap contributors (licencia ODbL).
+
+## Días de servicio
+
+Por ahora, **todos los días** (`diasServicio: [0, 1, 2, 3, 4, 5, 6]` en `web/src/services/datos.ts`, 0 = domingo). Para probar solo los lunes se cambia a `[1]`. Los días sin servicio la app dice "Hoy no hay servicio".
+
 ## Control de la estimación con un viaje real
 
 Un integrante del grupo toma la **vuelta** (sede → Alberti) los lunes: sale de la sede entre las **18:02 y las 18:05**, va por Panamericana, pasa por Villa Rosa, vuelve a la Panamericana, entra a Del Viso y lo deja en **Manuel Maza y San Cayetano** cerca de las **19:10**. Son **unos 65 minutos**.

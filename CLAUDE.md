@@ -29,11 +29,12 @@ Para usar la app hay que loguearse con Google. Sirve para que solo reporten estu
 - No copiar `displayName`, `email` ni `photoURL` a Firestore ni a `localStorage`. Si hace falta mostrarlos, se leen en el momento de `auth.currentUser`.
 - `firestore.rules`: todo requiere `request.auth != null`. En `reportes` se rechaza cualquier campo extra (`keys().hasOnly(...)`) y no se puede editar ni borrar. Cualquier otra colección está denegada.
 - "Mi parada" se guarda en el teléfono (Zustand `persist`) y nunca se sube.
+- Ubicación: solo para sugerir la parada más cercana al elegir "mi parada" (#38). Se pide **una vez**, con `getCurrentPosition` (nunca `watchPosition`), el cálculo se hace en el teléfono (`features/paradas/cercania.ts`) y la ubicación no se guarda ni se envía.
 - Anti-spam en el MVP: el cliente no deja reportar dos veces en 10 minutos.
 
 Diferencias respecto a Splitwaisito (no se usan en este proyecto, al menos no en el MVP):
 - Sin Storage ni cámara — no hay fotos que subir.
-- Sin `navigator.geolocation` / GPS continuo — el alcance del MVP es reportes puntuales por parada ("Me subí"), no tracking en vivo. Si más adelante se suma el mapa en vivo (backlog futuro), ahí se evalúa geolocalización.
+- Sin GPS continuo — el alcance del MVP es reportes puntuales por parada ("Me subí"), no tracking en vivo. La única ubicación que se usa es la puntual para sugerir la parada más cercana (ver Privacidad). Si más adelante se suma el mapa en vivo (backlog futuro), ahí se evalúa.
 - `recharts` solo si termina haciendo falta algún gráfico (por ejemplo, comparar puntualidad histórica); no asumir que se necesita desde el arranque.
 
 ## Estructura del repo
@@ -51,7 +52,7 @@ Diferencias respecto a Splitwaisito (no se usan en este proyecto, al menos no en
 firestore.rules, firebase.json
 ```
 
-Modelo Firestore: `recorridos/{id}` (nombre, linea, horariosSalida) → `paradas/{id}` (orden, nombre, segundosDesdeAnterior, segundosDetenido); `reportes/{id}` (recorridoId, paradaId, creadoEn). Los cálculos (`features/puntualidad/calculos.ts`, `puntualidad.ts`, `eta.ts`) son funciones puras con tests en Vitest. Los márgenes van en `features/puntualidad/config.ts`. Varios colectivos en viaje a la vez: `features/puntualidad/colectivos.ts` asigna cada reporte anónimo a la salida que mejor lo explica.
+Modelo Firestore: `recorridos/{id}` (nombre, linea, horariosSalida, diasServicio, tramos) → `paradas/{id}` (orden, nombre, segundosDesdeAnterior, segundosDetenido, lat, lng); `reportes/{id}` (recorridoId, paradaId, creadoEn). Los cálculos (`features/puntualidad/calculos.ts`, `puntualidad.ts`, `eta.ts`) son funciones puras con tests en Vitest. Los márgenes van en `features/puntualidad/config.ts`. Varios colectivos en viaje a la vez: `features/puntualidad/colectivos.ts` asigna cada reporte anónimo a la salida que mejor lo explica.
 
 Para conectar Firebase se reemplaza la implementación de `services/datos.ts` (`useRecorrido`, `useReportes`, `crearReporte`) sin cambiar sus firmas: las pantallas no se tocan. Las horas se piden a `services/reloj.ts` (`ahora()`), no a `new Date()` suelto.
 
