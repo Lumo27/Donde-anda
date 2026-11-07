@@ -29,6 +29,10 @@ Los promedios calculados en la ruta 0 son un piso, no una garantía: en la prác
 
 Con ese promedio ajustado, el horario de salida y la última parada reportada en vivo (vía "Me subí"), se puede proyectar a qué hora debería estar el colectivo en cualquier punto de la ruta. Comparando esa proyección contra el horario actual, la app puede indicar si el colectivo va a tiempo, adelantado o atrasado.
 
+## La app
+
+👉 **https://donde-anda-26cc1.web.app** (se instala desde el navegador: Android → menú ⋮ → "Instalar app"; iPhone → Compartir → "Agregar a inicio").
+
 ## Estado del proyecto
 
 La app funciona de punta a punta con el **recorrido real del 510 Ramal 9** (Estación Alberti → Sede Parque Industrial, salidas 06:50, 12:20 y 16:20) pero con **tiempos estimados** hasta medir la ruta 0, y con reportes que quedan en memoria. Ver [`docs/recorrido.md`](docs/recorrido.md). Falta conectarla a Firebase para que los "Me subí" se compartan entre celulares.
@@ -39,7 +43,7 @@ La app funciona de punta a punta con el **recorrido real del 510 Ramal 9** (Esta
 - [x] Pantallas: elegir mi parada, inicio con el recorrido, botón "Me subí" y lista de paradas
 - [x] PWA instalable, accesibilidad (Lighthouse 100) y 83 tests
 - [x] Reglas de seguridad de Firestore escritas (`firestore.rules`)
-- [ ] Proyecto de Firebase, login con Google, cargar la ruta y reportes compartidos (#16, #18, #20, #21, #22)
+- [x] Firebase: login con Google, recorrido cargado, reportes compartidos en vivo y app publicada (#16, #18–#22, #31)
 - [ ] Medir la ruta 0 real (#12)
 - [ ] Publicar, probar en celulares y piloto (#31 a #35)
 
