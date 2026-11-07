@@ -65,4 +65,16 @@ Más comandos en [`web/README.md`](web/README.md). Cómo se trabaja (ramas, comm
 3. **Login con Google (#20)** y subir las reglas ya escritas (#19).
 4. **En paralelo, en la calle:** medir la ruta 0 real (#12) y reemplazar los tiempos estimados de `docs/ruta0/ruta0-RAMAL9-ESTIMADA.csv`.
 
+## ⚠️ Problema conocido: el login con Google falla en el celular
+
+En la notebook el login anda (probado el 7/11: se hizo un "Me subí" y en Firestore quedó **solo** recorrido, parada y hora ✅). **En el celular la app se cae al tocar "Entrar con Google"** (#20, #32).
+
+Por dónde seguir:
+1. **Ver el error:** conectar el celular a la compu y abrir la consola (Android: `chrome://inspect`; iPhone: Safari → Desarrollo). Anotar qué celular, navegador y si la app estaba instalada o abierta en el navegador.
+2. **Causa más probable:** el login usa una ventanita (`signInWithPopup`), que muchos navegadores de celular bloquean o cortan. Hoy solo se pasa a `signInWithRedirect` si el error es "popup bloqueado" (`web/src/services/auth.ts`).
+3. **Arreglo recomendado por Firebase:** en el celular usar siempre `signInWithRedirect` y que el `authDomain` sea el mismo dominio de la app:
+   - En `web/src/services/firebaseConfig.ts`: `authDomain: 'donde-anda-26cc1.web.app'`.
+   - En Google Cloud Console → APIs y servicios → Credenciales → el cliente OAuth "Web client (auto created by Google Service)" → agregar `https://donde-anda-26cc1.web.app/__/auth/handler` en "URI de redireccionamiento autorizados".
+   - Volver a publicar y probar en Android y en iPhone (instalada y sin instalar).
+
 > La simulación de colectivos que se usó para mostrar el prototipo no está en el código. Quedó guardada en el tag `demo-simulacion` (`git checkout demo-simulacion`) por si hace falta para una presentación.
