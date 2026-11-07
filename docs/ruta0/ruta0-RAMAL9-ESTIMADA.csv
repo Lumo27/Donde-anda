@@ -1,0 +1,15 @@
+orden,parada,hora_llegada,hora_salida,se_detuvo,notas
+1,Estación Alberti,12:15:00,12:20:00,si,REAL - cabecera; sale 12:20 (06:50 / 12:20 / 16:20)
+2,Plaza San Martín,12:23:00,12:23:30,si,ESTIMADO - parada a confirmar
+3,Lisandro de la Torre y Av. Madero,12:29:00,12:29:20,si,ESTIMADO - dobla hacia el centro de Del Viso
+4,Paseo Del Viso,12:31:30,12:31:50,si,ESTIMADO - parada a confirmar
+5,Estación Del Viso,12:34:30,12:35:30,si,REAL - horario publicado por la universidad: 07:05 / 12:35 / 16:35
+6,Valentín Gómez y San Cayetano,12:38:30,12:38:50,si,ESTIMADO - por Valentín Gómez derecho
+7,Valentín Gómez y Portinari,12:40:30,12:40:50,si,ESTIMADO - dobla por Portinari
+8,Lisandro de la Torre y Lola Mora,12:43:00,12:43:20,si,ESTIMADO - por Lisandro de la Torre hacia la Panamericana
+9,Colectora Este y Caamaño,12:47:00,12:47:20,si,ESTIMADO - baja en Caamaño y sigue por la colectora
+10,Ruta 25 (diagonal),12:53:00,12:53:20,si,ESTIMADO - antes de la 25 dobla a la izquierda y toma la diagonal
+11,Estación Villa Rosa,12:56:00,12:56:40,si,ESTIMADO - entra por la 25 a Villa Rosa y corta por adentro
+12,Puente St. Catherine's (Mapuche),13:03:00,13:03:20,si,ESTIMADO - sale a Panamericana (puente de Mapuche / Action) hacia Pilar
+13,Frondizi (bajada Parque Industrial),13:12:00,13:12:30,si,ESTIMADO - baja de Panamericana en Frondizi
+14,Sede Parque Industrial,13:15:00,13:15:00,si,ESTIMADO - llegada a la sede
