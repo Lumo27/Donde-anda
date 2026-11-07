@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 import { crearReporte, useRecorrido, useUltimoReporte } from './datos'
 
 describe('datos locales (hasta tener Firebase)', () => {
-  it('trae el recorrido del 510 Ramal 9 con sus 14 paradas y las salidas desde Alberti', () => {
+  it('trae el recorrido del 510 Ramal 9 con sus 77 paradas y las salidas desde Alberti', () => {
     const { result } = renderHook(() => useRecorrido())
     expect(result.current?.recorrido).toMatchObject({
       id: '510-ida',
@@ -12,9 +12,9 @@ describe('datos locales (hasta tener Firebase)', () => {
       horariosSalida: ['06:50', '12:20', '16:20'],
       ficticia: true,
     })
-    expect(result.current?.paradas).toHaveLength(14)
+    expect(result.current?.paradas).toHaveLength(77)
     expect(result.current?.paradas[0].nombre).toBe('Estación Alberti')
-    expect(result.current?.paradas[13].nombre).toBe('Sede Parque Industrial')
+    expect(result.current?.paradas[76].nombre).toBe('Sede Parque Industrial (El Cenáculo)')
   })
 
   it('un "Me subí" nuevo aparece como último reporte, solo con parada y hora', async () => {

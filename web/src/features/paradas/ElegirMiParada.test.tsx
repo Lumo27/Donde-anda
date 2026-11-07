@@ -25,7 +25,7 @@ describe('ElegirMiParada (#26)', () => {
   it('lista las paradas donde se puede tomar el colectivo (no la facu)', () => {
     renderizar()
     const radios = screen.getAllByRole('radio')
-    expect(radios).toHaveLength(13) // 14 paradas menos la sede
+    expect(radios).toHaveLength(76) // 77 paradas menos la sede
     expect(screen.queryByRole('radio', { name: /Sede Parque Industrial/ })).toBeNull()
   })
 
