@@ -67,9 +67,15 @@ Fuente: **descripción del grupo**. Son referencias, todavía sin nombre oficial
 
 ---
 
+## Control de la estimación con un viaje real
+
+Un integrante del grupo toma la **vuelta** (sede → Alberti) los lunes: sale de la sede entre las **18:02 y las 18:05**, va por Panamericana, pasa por Villa Rosa, vuelve a la Panamericana, entra a Del Viso y lo deja en **Portinari** cerca de las **19:10**. Son **unos 65 minutos**.
+
+En la estimación de la ida, el mismo tramo (Manuel Maza y Portinari → sede) da **unos 64 minutos**. No es el mismo sentido, así que no reemplaza la ruta 0, pero indica que el orden de magnitud de la estimación es correcto.
+
 ## Qué falta confirmar
 
-- **Tiempos de cada parada:** se miden en la ruta 0 (#12). Hoy el viaje estimado dura **85 minutos** (12:20 → 13:45). Solo la salida de Alberti y el paso por Del Viso son reales.
+- **Tiempos de cada parada:** se miden en la ruta 0 (#12). Hoy el viaje estimado dura **85 minutos** (12:20 → 13:45), con 30 s detenido en cada parada (el mismo piso que usa el margen, para que no infle de más). Solo la salida de Alberti y el paso por Del Viso son reales.
 - **Tramo 2:** que en este sentido el colectivo para en las mismas paradas que la línea que va al revés.
 - **Tramo 4:** los nombres oficiales de esas paradas y que **El Cenáculo** sea la sede.
 - **Qué paradas usan los estudiantes:** sirve para el piloto; la app igual muestra todas.

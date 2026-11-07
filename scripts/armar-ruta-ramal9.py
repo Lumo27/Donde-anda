@@ -63,7 +63,7 @@ for k, (n, f) in enumerate(paradas):
     if k == 0:
         lleg, sal, est = "12:15:00", "12:20:00", "REAL - cabecera; sale 06:50 / 12:20 / 16:20"
     else:
-        d = 0 if k == len(paradas) - 1 else detenido.get(k, 20)
+        d = 0 if k == len(paradas) - 1 else detenido.get(k, 30)  # 30 s = piso del margen (#14): no infla de más
         lleg, sal = hhmmss(llegada[k]), hhmmss(llegada[k] + d)
         est = "REAL - pasa 07:05 / 12:35 / 16:35 (publicado por la universidad)" if n == "Estación Del Viso" else "ESTIMADO"
     nombre = f'"{n}"' if "," in n else n

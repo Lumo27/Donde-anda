@@ -1,78 +1,78 @@
 orden,parada,hora_llegada,hora_salida,se_detuvo,notas
 1,Estación Alberti,12:15:00,12:20:00,si,REAL - cabecera; sale 06:50 / 12:20 / 16:20 - Moovit 510 R5
-2,Hipólito Yrigoyen Y Santa Rita,12:20:43,12:21:03,si,ESTIMADO - Moovit 510 R5
-3,Santa Rita Y Arteaga,12:21:26,12:21:46,si,ESTIMADO - Moovit 510 R5
-4,Plaza San Martín,12:22:08,12:22:28,si,ESTIMADO - Moovit 510 R5
-5,Instituto María Madre Nuestra,12:22:51,12:23:11,si,ESTIMADO - Moovit 510 R5
-6,Padre Roqueta Y Batalla De Arroyo Grande,12:23:34,12:23:54,si,ESTIMADO - Moovit 510 R5
-7,Padre Roqueta Y Batalla De Curupaytí,12:24:16,12:24:36,si,ESTIMADO - Moovit 510 R5
-8,Batalla De Curupaytí Y Santa Julia,12:24:59,12:25:19,si,ESTIMADO - Moovit 510 R5
-9,Escuela Secundaria N° 10,12:25:42,12:26:02,si,ESTIMADO - Moovit 510 R5
-10,Santa Eulalia Y Batalla De Famaillá,12:26:25,12:26:45,si,ESTIMADO - Moovit 510 R5
-11,Santa Eulalia Y Batalla De Ituzaingó,12:27:08,12:27:28,si,ESTIMADO - Moovit 510 R5
-12,Santa Eulalia Y Ensenada,12:27:50,12:28:10,si,ESTIMADO - Moovit 510 R5
-13,Santa Eulalia Y Batalla De Caseros,12:28:33,12:28:53,si,ESTIMADO - Moovit 510 R5
-14,Santa Eulalia Y Avenida Constitución,12:29:16,12:29:36,si,ESTIMADO - Moovit 510 R5
-15,Avenida Constitución Y Azcuénaga,12:29:58,12:30:18,si,ESTIMADO - Moovit 510 R5
-16,Avenida Madero Y Oliden,12:30:41,12:31:01,si,ESTIMADO - Moovit 510 R5
-17,Lisandro De La Torre Y Avenida Madero,12:31:24,12:31:44,si,ESTIMADO - Moovit 510 R5
-18,Paseo Del Viso,12:32:07,12:32:27,si,ESTIMADO - Moovit 510 R5
-19,Lisandro De La Torre Y Arata,12:32:50,12:33:10,si,ESTIMADO - Moovit 510 R5
-20,Juan Giménez E Independencia,12:33:32,12:33:52,si,ESTIMADO - Moovit 510 R5
+2,Hipólito Yrigoyen Y Santa Rita,12:20:43,12:21:13,si,ESTIMADO - Moovit 510 R5
+3,Santa Rita Y Arteaga,12:21:26,12:21:56,si,ESTIMADO - Moovit 510 R5
+4,Plaza San Martín,12:22:08,12:22:38,si,ESTIMADO - Moovit 510 R5
+5,Instituto María Madre Nuestra,12:22:51,12:23:21,si,ESTIMADO - Moovit 510 R5
+6,Padre Roqueta Y Batalla De Arroyo Grande,12:23:34,12:24:04,si,ESTIMADO - Moovit 510 R5
+7,Padre Roqueta Y Batalla De Curupaytí,12:24:16,12:24:46,si,ESTIMADO - Moovit 510 R5
+8,Batalla De Curupaytí Y Santa Julia,12:24:59,12:25:29,si,ESTIMADO - Moovit 510 R5
+9,Escuela Secundaria N° 10,12:25:42,12:26:12,si,ESTIMADO - Moovit 510 R5
+10,Santa Eulalia Y Batalla De Famaillá,12:26:25,12:26:55,si,ESTIMADO - Moovit 510 R5
+11,Santa Eulalia Y Batalla De Ituzaingó,12:27:08,12:27:38,si,ESTIMADO - Moovit 510 R5
+12,Santa Eulalia Y Ensenada,12:27:50,12:28:20,si,ESTIMADO - Moovit 510 R5
+13,Santa Eulalia Y Batalla De Caseros,12:28:33,12:29:03,si,ESTIMADO - Moovit 510 R5
+14,Santa Eulalia Y Avenida Constitución,12:29:16,12:29:46,si,ESTIMADO - Moovit 510 R5
+15,Avenida Constitución Y Azcuénaga,12:29:58,12:30:28,si,ESTIMADO - Moovit 510 R5
+16,Avenida Madero Y Oliden,12:30:41,12:31:11,si,ESTIMADO - Moovit 510 R5
+17,Lisandro De La Torre Y Avenida Madero,12:31:24,12:31:54,si,ESTIMADO - Moovit 510 R5
+18,Paseo Del Viso,12:32:07,12:32:37,si,ESTIMADO - Moovit 510 R5
+19,Lisandro De La Torre Y Arata,12:32:50,12:33:20,si,ESTIMADO - Moovit 510 R5
+20,Juan Giménez E Independencia,12:33:32,12:34:02,si,ESTIMADO - Moovit 510 R5
 21,Estación Del Viso,12:34:15,12:35:00,si,REAL - pasa 07:05 / 12:35 / 16:35 (publicado por la universidad) - Moovit 510 R5
-22,Valentín Gómez Y Avenida Madero,12:35:19,12:35:39,si,ESTIMADO - Moovit 510 R5
-23,Valentín Gómez Y Juana García,12:36:22,12:36:42,si,ESTIMADO - Moovit 510 R5
-24,Valentín Gómez Y Penna,12:37:26,12:37:46,si,ESTIMADO - Moovit 510 R5
-25,Valentín Gómez Y San Cayetano,12:38:30,12:38:50,si,ESTIMADO - Moovit 510 R5
-26,Manuel Maza Y Santa Celia,12:39:34,12:39:54,si,ESTIMADO - Moovit 510 R5
-27,Manuel Maza Y Portinari,12:40:38,12:40:58,si,ESTIMADO - Moovit 510 R5
-28,Escuela Primaria N° 39,12:41:41,12:42:01,si,ESTIMADO - Moovit 510 R5
-29,Jardín De Infantes N° 914,12:42:45,12:43:05,si,ESTIMADO - Moovit 510 R5
-30,Lisandro De La Torre Y Lola Mora,12:43:49,12:44:09,si,ESTIMADO - Moovit 510 R5
-31,Lisandro De La Torre Y Chiappori,12:44:52,12:45:12,si,ESTIMADO - Moovit 510 R5
-32,Colectora Este Y Florida,12:45:56,12:46:16,si,ESTIMADO - Moovit 510 R5
-33,12 De Octubre Y Caamaño,12:47:00,12:47:20,si,ESTIMADO - Moovit 510 R5
-34,Pueblo Caamaño,12:47:56,12:48:16,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-35,Barrio Haras Del Pilar / Supermercado Eco,12:48:53,12:49:13,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-36,Saint Matthew's College,12:49:49,12:50:09,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-37,Saint Matthew's Village,12:50:46,12:51:06,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-38,Club De Campo Chateau Pilar,12:51:42,12:52:02,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-39,Caamaño Y Manzoni,12:52:39,12:52:59,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-40,Caamaño Y Fosatti,12:53:35,12:53:55,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-41,Verazzi Y Calcagno,12:54:32,12:54:52,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-42,Quinquela Martín Y José Villanueva,12:55:28,12:55:48,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-43,Pilar Del Este,12:56:25,12:56:45,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-44,Avenida Honorio Pueyrredón Y Chazarreta,12:57:21,12:57:41,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-45,Avenida Honorio Pueyrredón Y Athos Palma,12:58:18,12:58:38,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-46,Avenida Honorio Pueyrredón Y Ernesto De La Cárcova,12:59:14,12:59:34,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-47,Avenida Honorio Pueyrredón Y Benjamín Rawson,13:00:11,13:00:31,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-48,Hipólito Yrigoyen Y Avenida Honorio Pueyrredón,13:01:07,13:01:27,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-49,Escuela N° 14,13:02:04,13:02:24,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+22,Valentín Gómez Y Avenida Madero,12:35:19,12:35:49,si,ESTIMADO - Moovit 510 R5
+23,Valentín Gómez Y Juana García,12:36:22,12:36:52,si,ESTIMADO - Moovit 510 R5
+24,Valentín Gómez Y Penna,12:37:26,12:37:56,si,ESTIMADO - Moovit 510 R5
+25,Valentín Gómez Y San Cayetano,12:38:30,12:39:00,si,ESTIMADO - Moovit 510 R5
+26,Manuel Maza Y Santa Celia,12:39:34,12:40:04,si,ESTIMADO - Moovit 510 R5
+27,Manuel Maza Y Portinari,12:40:38,12:41:08,si,ESTIMADO - Moovit 510 R5
+28,Escuela Primaria N° 39,12:41:41,12:42:11,si,ESTIMADO - Moovit 510 R5
+29,Jardín De Infantes N° 914,12:42:45,12:43:15,si,ESTIMADO - Moovit 510 R5
+30,Lisandro De La Torre Y Lola Mora,12:43:49,12:44:19,si,ESTIMADO - Moovit 510 R5
+31,Lisandro De La Torre Y Chiappori,12:44:52,12:45:22,si,ESTIMADO - Moovit 510 R5
+32,Colectora Este Y Florida,12:45:56,12:46:26,si,ESTIMADO - Moovit 510 R5
+33,12 De Octubre Y Caamaño,12:47:00,12:47:30,si,ESTIMADO - Moovit 510 R5
+34,Pueblo Caamaño,12:47:56,12:48:26,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+35,Barrio Haras Del Pilar / Supermercado Eco,12:48:53,12:49:23,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+36,Saint Matthew's College,12:49:49,12:50:19,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+37,Saint Matthew's Village,12:50:46,12:51:16,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+38,Club De Campo Chateau Pilar,12:51:42,12:52:12,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+39,Caamaño Y Manzoni,12:52:39,12:53:09,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+40,Caamaño Y Fosatti,12:53:35,12:54:05,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+41,Verazzi Y Calcagno,12:54:32,12:55:02,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+42,Quinquela Martín Y José Villanueva,12:55:28,12:55:58,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+43,Pilar Del Este,12:56:25,12:56:55,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+44,Avenida Honorio Pueyrredón Y Chazarreta,12:57:21,12:57:51,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+45,Avenida Honorio Pueyrredón Y Athos Palma,12:58:18,12:58:48,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+46,Avenida Honorio Pueyrredón Y Ernesto De La Cárcova,12:59:14,12:59:44,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+47,Avenida Honorio Pueyrredón Y Benjamín Rawson,13:00:11,13:00:41,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+48,Hipólito Yrigoyen Y Avenida Honorio Pueyrredón,13:01:07,13:01:37,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+49,Escuela N° 14,13:02:04,13:02:34,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
 50,Estación Villa Rosa,13:03:00,13:03:45,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-51,Moreno Y Rivadavia (Estación Villa Rosa),13:04:00,13:04:20,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-52,Moreno Y Sarmiento,13:05:00,13:05:20,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-53,Moreno Y Libertad,13:06:00,13:06:20,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-54,Avenida Honorio Pueyrredón Y Sánchez De Loria,13:07:00,13:07:20,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-55,Chacabuco Y Avenida Honorio Pueyrredón,13:08:00,13:08:20,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-56,Chacabuco Y Serrano,13:09:00,13:09:20,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-57,Chacabuco Y Acevedo,13:10:00,13:10:20,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-58,Chacabuco Y Darregueira,13:11:00,13:11:20,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-59,Colegio St. John's,13:12:00,13:12:20,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
-60,12 De Octubre Y Chacabuco,13:13:00,13:13:20,si,ESTIMADO - Moovit 510 R5
-61,Hotel Sheraton Pilar,13:13:49,13:14:09,si,ESTIMADO - Moovit 510 R5
-62,Siga La Vaca,13:14:38,13:14:58,si,ESTIMADO - Moovit 510 R5
-63,Village Pilar,13:15:27,13:15:47,si,ESTIMADO - Moovit 510 R5
-64,12 De Octubre Y Tupiza,13:16:16,13:16:36,si,ESTIMADO - Moovit 510 R5
-65,12 De Octubre Y Pisco,13:17:05,13:17:25,si,ESTIMADO - Moovit 510 R5
-66,Colectora Este Y Argerich,13:17:55,13:18:15,si,ESTIMADO - Moovit 510 R5
-67,Colectora Este Y Tomás Guido,13:18:44,13:19:04,si,ESTIMADO - Moovit 510 R5
-68,12 De Octubre Y Naón,13:19:33,13:19:53,si,ESTIMADO - Moovit 510 R5
-69,12 De Octubre Y Avenida Honorio Pueyrredón,13:20:22,13:20:42,si,ESTIMADO - Moovit 510 R5
-70,12 De Octubre Y Santa María,13:21:11,13:21:31,si,ESTIMADO - Moovit 510 R5
-71,Paseo Champagnat,13:22:00,13:22:20,si,ESTIMADO - Moovit 510 R5
-72,12 De Octubre Y Domingo French (puente),13:25:00,13:25:20,si,ESTIMADO - referencia del grupo
-73,Panamericana Y Granadero Juan Mateo Gelves,13:28:00,13:28:20,si,ESTIMADO - referencia del grupo
-74,Bajada Autopista Y Pergamino (Colectora Ruta 8),13:37:00,13:37:20,si,ESTIMADO - referencia del grupo
-75,Avenida Doctor Arturo Frondizi,13:39:40,13:40:00,si,ESTIMADO - referencia del grupo
-76,Rotonda De La Calle 9,13:42:20,13:42:40,si,ESTIMADO - referencia del grupo
+51,Moreno Y Rivadavia (Estación Villa Rosa),13:04:00,13:04:30,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+52,Moreno Y Sarmiento,13:05:00,13:05:30,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+53,Moreno Y Libertad,13:06:00,13:06:30,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+54,Avenida Honorio Pueyrredón Y Sánchez De Loria,13:07:00,13:07:30,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+55,Chacabuco Y Avenida Honorio Pueyrredón,13:08:00,13:08:30,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+56,Chacabuco Y Serrano,13:09:00,13:09:30,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+57,Chacabuco Y Acevedo,13:10:00,13:10:30,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+58,Chacabuco Y Darregueira,13:11:00,13:11:30,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+59,Colegio St. John's,13:12:00,13:12:30,si,ESTIMADO - Moovit 510 R9 Villa del Carmen (sentido contrario)
+60,12 De Octubre Y Chacabuco,13:13:00,13:13:30,si,ESTIMADO - Moovit 510 R5
+61,Hotel Sheraton Pilar,13:13:49,13:14:19,si,ESTIMADO - Moovit 510 R5
+62,Siga La Vaca,13:14:38,13:15:08,si,ESTIMADO - Moovit 510 R5
+63,Village Pilar,13:15:27,13:15:57,si,ESTIMADO - Moovit 510 R5
+64,12 De Octubre Y Tupiza,13:16:16,13:16:46,si,ESTIMADO - Moovit 510 R5
+65,12 De Octubre Y Pisco,13:17:05,13:17:35,si,ESTIMADO - Moovit 510 R5
+66,Colectora Este Y Argerich,13:17:55,13:18:25,si,ESTIMADO - Moovit 510 R5
+67,Colectora Este Y Tomás Guido,13:18:44,13:19:14,si,ESTIMADO - Moovit 510 R5
+68,12 De Octubre Y Naón,13:19:33,13:20:03,si,ESTIMADO - Moovit 510 R5
+69,12 De Octubre Y Avenida Honorio Pueyrredón,13:20:22,13:20:52,si,ESTIMADO - Moovit 510 R5
+70,12 De Octubre Y Santa María,13:21:11,13:21:41,si,ESTIMADO - Moovit 510 R5
+71,Paseo Champagnat,13:22:00,13:22:30,si,ESTIMADO - Moovit 510 R5
+72,12 De Octubre Y Domingo French (puente),13:25:00,13:25:30,si,ESTIMADO - referencia del grupo
+73,Panamericana Y Granadero Juan Mateo Gelves,13:28:00,13:28:30,si,ESTIMADO - referencia del grupo
+74,Bajada Autopista Y Pergamino (Colectora Ruta 8),13:37:00,13:37:30,si,ESTIMADO - referencia del grupo
+75,Avenida Doctor Arturo Frondizi,13:39:40,13:40:10,si,ESTIMADO - referencia del grupo
+76,Rotonda De La Calle 9,13:42:20,13:42:50,si,ESTIMADO - referencia del grupo
 77,Sede Parque Industrial (El Cenáculo),13:45:00,13:45:00,si,ESTIMADO - referencia del grupo
