@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import rutaFicticiaCsv from '../../../docs/ruta0/ruta0-FICTICIA.csv?raw'
+import rutaCsv from '../../../docs/ruta0/ruta0-RAMAL9-ESTIMADA.csv?raw'
 import { useAhora } from '../features/estado/useAhora'
 import { paradasDesdeCsv } from '../features/paradas/ruta0Csv'
 import type { Parada, Recorrido, Reporte } from '../types/modelos'
@@ -7,20 +7,22 @@ import { ahora } from './reloj'
 
 // Fuente de datos de la app. Las pantallas piden todo acá y no saben de dónde viene.
 //
-// HOY: datos locales de prueba. La ruta ficticia sale de docs/ruta0/ y los "Me subí" quedan en memoria
-// (se pierden al recargar y no se comparten entre celulares).
+// HOY: datos locales. El recorrido real del 510 Ramal 9 con tiempos estimados sale de docs/ruta0/ (ver
+// docs/recorrido.md) y los "Me subí" quedan en memoria (se pierden al recargar y no se comparten entre celulares).
 // CUANDO ESTÉ FIREBASE: se reemplaza la implementación de este archivo por Firestore, sin cambiar las firmas
 // de las funciones, así que las pantallas no cambian:
 //   - useRecorrido → leer recorridos/510-ida y sus paradas (#16, #18)
 //   - useReportes  → escuchar con onSnapshot los reportes del día del recorrido (#22)
 //   - crearReporte → addDoc con { recorridoId, paradaId, creadoEn: serverTimestamp() } y NADA más (#21)
 
-const RECORRIDO_FICTICIO: Recorrido = {
+const RECORRIDO: Recorrido = {
   id: '510-ida',
-  nombre: '510 → Parque Industrial',
+  nombre: '510 Ramal 9 → Sede Parque Industrial',
   linea: '510',
   sentido: 'ida',
-  horariosSalida: ['07:00', '08:30', '13:00', '17:30'], // mock, ver docs/recorrido.md
+  // Salidas desde Estación Alberti: 15 min antes de los horarios publicados en Estación Del Viso (07:05, 12:35, 16:35).
+  horariosSalida: ['06:50', '12:20', '16:20'],
+  // Tiempos entre paradas estimados hasta medir la ruta 0 (#12): la app muestra el aviso.
   ficticia: true,
 }
 
@@ -29,14 +31,14 @@ export interface DatosRecorrido {
   paradas: Parada[]
 }
 
-const DATOS_FICTICIOS: DatosRecorrido = {
-  recorrido: RECORRIDO_FICTICIO,
-  paradas: paradasDesdeCsv(rutaFicticiaCsv),
+const DATOS: DatosRecorrido = {
+  recorrido: RECORRIDO,
+  paradas: paradasDesdeCsv(rutaCsv),
 }
 
 /** El recorrido del MVP con sus paradas. Devuelve null mientras carga (con Firebase va a tardar un instante). */
 export function useRecorrido(): DatosRecorrido | null {
-  return DATOS_FICTICIOS
+  return DATOS
 }
 
 // Reportes en memoria. Solo parada y hora: igual que en Firestore, nada de quién lo hizo.

@@ -25,8 +25,8 @@ describe('ElegirMiParada (#26)', () => {
   it('lista las paradas donde se puede tomar el colectivo (no la facu)', () => {
     renderizar()
     const radios = screen.getAllByRole('radio')
-    expect(radios).toHaveLength(9)
-    expect(screen.queryByRole('radio', { name: /Parque Industrial/ })).toBeNull()
+    expect(radios).toHaveLength(13) // 14 paradas menos la sede
+    expect(screen.queryByRole('radio', { name: /Sede Parque Industrial/ })).toBeNull()
   })
 
   it('no deja confirmar sin elegir', () => {
@@ -36,10 +36,10 @@ describe('ElegirMiParada (#26)', () => {
 
   it('guarda la parada solo en el teléfono y vuelve al inicio', () => {
     renderizar()
-    fireEvent.click(screen.getByRole('radio', { name: 'Del Viso' }))
+    fireEvent.click(screen.getByRole('radio', { name: 'Estación Del Viso' }))
     fireEvent.click(screen.getByRole('button', { name: 'Listo' }))
-    expect(useMiParada.getState().paradaId).toBe('del-viso')
-    expect(JSON.parse(localStorage.getItem('donde-anda:mi-parada')!).state).toEqual({ paradaId: 'del-viso' })
+    expect(useMiParada.getState().paradaId).toBe('estacion-del-viso')
+    expect(JSON.parse(localStorage.getItem('donde-anda:mi-parada')!).state).toEqual({ paradaId: 'estacion-del-viso' })
     expect(screen.getByText('Inicio')).toBeTruthy()
   })
 })

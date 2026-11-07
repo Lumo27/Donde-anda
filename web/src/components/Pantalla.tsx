@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { ChevronLeft, MapPin, TriangleAlert } from 'lucide-react'
 import { useRecorrido } from '../services/datos'
 
-// Marco común de todas las pantallas: encabezado, cartel de datos de prueba y ancho de celular.
+// Marco común de todas las pantallas: encabezado, aviso de tiempos estimados y ancho de celular.
 
 type Props = {
   children: ReactNode
@@ -39,7 +39,7 @@ export function Pantalla({ children, volverA }: Props) {
             className="flex items-center justify-center gap-2 rounded-lg border-2 border-amber-600 bg-amber-50 px-3 py-1.5 text-sm font-bold text-amber-900"
           >
             <TriangleAlert aria-hidden className="h-4 w-4" strokeWidth={2.5} />
-            Datos de prueba (ruta ficticia)
+            Tiempos estimados: falta medir la ruta 0
           </p>
         )}
         {children}
