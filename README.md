@@ -31,7 +31,7 @@ Con ese promedio ajustado, el horario de salida y la última parada reportada en
 
 ## Estado del proyecto
 
-La app funciona de punta a punta con **datos de prueba**: una ruta ficticia de la 510 (las 4 paradas reales de los flyers más paradas "ficticias") y reportes que quedan en memoria. Falta conectarla a Firebase para que los "Me subí" se compartan entre celulares.
+La app funciona de punta a punta con el **recorrido real del 510 Ramal 9** (Estación Alberti → Sede Parque Industrial, salidas 06:50, 12:20 y 16:20) pero con **tiempos estimados** hasta medir la ruta 0, y con reportes que quedan en memoria. Ver [`docs/recorrido.md`](docs/recorrido.md). Falta conectarla a Firebase para que los "Me subí" se compartan entre celulares.
 
 - [x] Diagnóstico, criterios de la materia, recorrido, modelo de datos, privacidad y wireframes (`docs/`)
 - [x] Cálculos: tiempos de la ruta 0, margen de seguridad, puntualidad y "cuánto falta para mi parada"
@@ -59,6 +59,6 @@ Más comandos en [`web/README.md`](web/README.md). Cómo se trabaja (ramas, comm
 1. **Crear el proyecto de Firebase (#16).** Es lo que destraba casi todo lo que queda. Los pasos están en la tarjeta.
 2. **Conectar la app a Firebase.** Todo pasa por un solo archivo, [`web/src/services/datos.ts`](web/src/services/datos.ts): hoy usa datos locales y adentro dice qué reemplazar en cada función (#18, #21, #22). Las pantallas no se tocan.
 3. **Login con Google (#20)** y subir las reglas ya escritas (#19).
-4. **En paralelo, en la calle:** medir la ruta 0 real (#12) y reemplazar `docs/ruta0/ruta0-FICTICIA.csv`.
+4. **En paralelo, en la calle:** medir la ruta 0 real (#12) y reemplazar los tiempos estimados de `docs/ruta0/ruta0-RAMAL9-ESTIMADA.csv`.
 
 > La simulación de colectivos que se usó para mostrar el prototipo no está en el código. Quedó guardada en el tag `demo-simulacion` (`git checkout demo-simulacion`) por si hace falta para una presentación.
