@@ -69,9 +69,9 @@ Fuente: **descripción del grupo**. Son referencias, todavía sin nombre oficial
 
 ## Control de la estimación con un viaje real
 
-Un integrante del grupo toma la **vuelta** (sede → Alberti) los lunes: sale de la sede entre las **18:02 y las 18:05**, va por Panamericana, pasa por Villa Rosa, vuelve a la Panamericana, entra a Del Viso y lo deja en **Portinari** cerca de las **19:10**. Son **unos 65 minutos**.
+Un integrante del grupo toma la **vuelta** (sede → Alberti) los lunes: sale de la sede entre las **18:02 y las 18:05**, va por Panamericana, pasa por Villa Rosa, vuelve a la Panamericana, entra a Del Viso y lo deja en **Manuel Maza y San Cayetano** cerca de las **19:10**. Son **unos 65 minutos**.
 
-En la estimación de la ida, el mismo tramo (Manuel Maza y Portinari → sede) da **unos 64 minutos**. No es el mismo sentido, así que no reemplaza la ruta 0, pero indica que el orden de magnitud de la estimación es correcto.
+En la estimación de la ida, el tramo equivalente (Valentín Gómez y San Cayetano, la parada de la ida a la vuelta de la esquina → sede, 12:38 → 13:45) da **unos 66 minutos**. No es el mismo sentido, así que no reemplaza la ruta 0, pero indica que el orden de magnitud de la estimación es correcto.
 
 ## Qué falta confirmar
 
