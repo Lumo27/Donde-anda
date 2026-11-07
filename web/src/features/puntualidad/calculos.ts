@@ -100,6 +100,20 @@ export function fechaEnArgentina(momento: Date): string {
   return new Date(momento.getTime() + MS_OFFSET_ARGENTINA).toISOString().slice(0, 10)
 }
 
+/** ¿El colectivo corre el día (de Argentina) en que cae `momento`? `diasServicio`: 0 = domingo … 6 = sábado. */
+export function circulaElDia(diasServicio: number[], momento: Date): boolean {
+  const dia = new Date(`${fechaEnArgentina(momento)}T12:00:00Z`).getUTCDay()
+  return diasServicio.includes(dia)
+}
+
+/** Los horarios de salida de ese día: los del recorrido si corre, o ninguno si no hay servicio. */
+export function horariosDelDia(
+  recorrido: { horariosSalida: string[]; diasServicio: number[] },
+  momento: Date,
+): string[] {
+  return circulaElDia(recorrido.diasServicio, momento) ? recorrido.horariosSalida : []
+}
+
 /** Convierte un horario de salida "HH:mm" (hora de Argentina) en un Date del mismo día que `referencia`. */
 export function horaSalidaDelDia(hhmm: string, referencia: Date): Date {
   if (!/^\d{2}:\d{2}$/.test(hhmm)) {

@@ -25,3 +25,18 @@ describe('datos locales (hasta tener Firebase)', () => {
     expect(Object.keys(result.current!).sort()).toEqual(['creadoEn', 'id', 'paradaId', 'recorridoId'])
   })
 })
+
+describe('ubicación y zonas del recorrido (#38)', () => {
+  it('las 77 paradas tienen coordenadas (aunque algunas sean aproximadas)', () => {
+    const { result } = renderHook(() => useRecorrido())
+    expect(result.current?.paradas.every((p) => p.lat !== undefined && p.lng !== undefined)).toBe(true)
+  })
+
+  it('las zonas cubren todo el recorrido, en orden, sin huecos ni superposiciones', () => {
+    const { result } = renderHook(() => useRecorrido())
+    const { tramos } = result.current!.recorrido
+    expect(tramos[0].desde).toBe(1)
+    expect(tramos[tramos.length - 1].hasta).toBe(result.current!.paradas.length)
+    tramos.slice(1).forEach((t, i) => expect(t.desde).toBe(tramos[i].hasta + 1))
+  })
+})

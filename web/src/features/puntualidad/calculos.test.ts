@@ -3,6 +3,8 @@ import { describe, expect, it } from 'vitest'
 import { paradasDesdeCsv } from '../paradas/ruta0Csv'
 import {
   aplicarMargen,
+  circulaElDia,
+  horariosDelDia,
   fechaEnArgentina,
   horaSalidaDelDia,
   horariosEstimados,
@@ -133,5 +135,31 @@ describe('aplicarMargen (#14)', () => {
 
   it('no modifica las paradas originales', () => {
     expect(paradas[1].segundosDesdeAnterior).toBe(210)
+  })
+})
+
+describe('días de servicio', () => {
+  // 26/10/2026 es lunes
+  const lunes = new Date('2026-10-26T12:00:00-03:00')
+  const domingo = new Date('2026-10-25T12:00:00-03:00')
+
+  it('todos los días', () => {
+    expect(circulaElDia([0, 1, 2, 3, 4, 5, 6], domingo)).toBe(true)
+  })
+
+  it('solo lunes (para probar)', () => {
+    expect(circulaElDia([1], lunes)).toBe(true)
+    expect(circulaElDia([1], domingo)).toBe(false)
+  })
+
+  it('usa el día de Argentina aunque en UTC ya sea el siguiente', () => {
+    // Lunes 22:30 en Argentina = martes 01:30 UTC
+    expect(circulaElDia([1], new Date('2026-10-27T01:30:00Z'))).toBe(true)
+  })
+
+  it('sin servicio ese día no hay horarios', () => {
+    const recorrido = { horariosSalida: ['06:50', '12:20'], diasServicio: [1] }
+    expect(horariosDelDia(recorrido, lunes)).toEqual(['06:50', '12:20'])
+    expect(horariosDelDia(recorrido, domingo)).toEqual([])
   })
 })

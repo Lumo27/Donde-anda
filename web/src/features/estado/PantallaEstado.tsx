@@ -6,7 +6,7 @@ import { Tarjeta } from '../../components/Tarjeta'
 import { useRecorrido, useReportes } from '../../services/datos'
 import { useMiParada } from '../paradas/useMiParada'
 import { BotonMeSubi } from '../reportes/BotonMeSubi'
-import { aplicarMargen, enOrden, resumenRecorrido } from '../puntualidad/calculos'
+import { aplicarMargen, enOrden, horariosDelDia, resumenRecorrido } from '../puntualidad/calculos'
 import { colectivosEnRecorrido, proximoAMiParada } from '../puntualidad/colectivos'
 import { calcularEstado } from '../puntualidad/puntualidad'
 import { duracion, formatearHora, haceCuanto } from './formato'
@@ -30,7 +30,8 @@ export default function PantallaEstado() {
   const { recorrido, paradas } = datos
   const nombreDe = (id: string) => paradas.find((p) => p.id === id)?.nombre ?? id
 
-  const { horariosSalida } = recorrido
+  const horariosSalida = horariosDelDia(recorrido, ahora)
+  const hayServicioHoy = horariosSalida.length > 0
   const colectivos = colectivosEnRecorrido({ reportes, paradas, horariosSalida, ahora })
   // El último reporte se muestra si es de un colectivo que sigue en viaje.
   const delReporte = colectivos.find((c) => c.ultimoReporte === ultimoReporte)
@@ -74,7 +75,7 @@ export default function PantallaEstado() {
       <Tarjeta titulo={`Tu parada: ${nombreDe(miParadaId)}`} destacada>
         <div aria-live="polite">
           {!estimacion ? (
-            <p className="text-2xl font-extrabold">No hay más colectivos hoy</p>
+            <p className="text-2xl font-extrabold">{hayServicioHoy ? 'No hay más colectivos hoy' : 'Hoy no hay servicio'}</p>
           ) : (
             <>
               <p className="text-3xl font-extrabold">
@@ -99,7 +100,7 @@ export default function PantallaEstado() {
       </Tarjeta>
 
       <div className="text-gray-700">
-        <p>Salidas de hoy: {horariosSalida.join(' · ')}</p>
+        <p>{hayServicioHoy ? `Salidas de hoy: ${horariosSalida.join(' · ')}` : 'Hoy no hay servicio'}</p>
         <p>
           {resumen.cantidadParadas} paradas · ~{duracion(resumen.segundosTotales)} de recorrido
         </p>
