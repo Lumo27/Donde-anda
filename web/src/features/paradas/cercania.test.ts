@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { Parada } from '../../types/modelos'
-import { distanciaMetros, paradaMasCercana, textoDistancia } from './cercania'
+import { distanciaMetros, distanciaPorRecorrido, paradaMasCercana, textoDistancia } from './cercania'
 
 const parada = (id: string, lat?: number, lng?: number): Parada => ({
   id,
@@ -37,5 +37,23 @@ describe('cercanía (#38)', () => {
     expect(textoDistancia(340)).toBe('a 350 m')
     expect(textoDistancia(12)).toBe('a 50 m')
     expect(textoDistancia(1234)).toBe('a 1,2 km')
+  })
+})
+
+describe('distancia por recorrido (#40)', () => {
+  // Tres paradas en línea recta hacia el norte, a ~100 m una de otra
+  const enFila = [parada('a', -34.45, -58.8), parada('b', -34.4491, -58.8), parada('c', -34.4482, -58.8)]
+
+  it('suma tramo por tramo', () => {
+    expect(distanciaPorRecorrido(enFila, 0, 2)).toBeCloseTo(200, -1)
+  })
+
+  it('0 si es la misma parada o ya quedó atrás', () => {
+    expect(distanciaPorRecorrido(enFila, 2, 2)).toBe(0)
+    expect(distanciaPorRecorrido(enFila, 2, 0)).toBe(0)
+  })
+
+  it('null si falta la ubicación de alguna parada del tramo', () => {
+    expect(distanciaPorRecorrido([...enFila, parada('sin')], 1, 3)).toBeNull()
   })
 })

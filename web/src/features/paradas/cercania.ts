@@ -37,3 +37,19 @@ export function textoDistancia(metros: number): string {
   if (metros < 1000) return `a ${Math.round(metros / 50) * 50 || 50} m`
   return `a ${(metros / 1000).toFixed(1).replace('.', ',')} km`
 }
+
+/**
+ * Distancia en metros entre dos paradas siguiendo el recorrido (sumando tramo por tramo), de `desde` a `hasta`
+ * (índices en orden). Si a algún tramo le faltan coordenadas, devuelve null.
+ */
+export function distanciaPorRecorrido(paradas: Parada[], desde: number, hasta: number): number | null {
+  if (hasta <= desde) return 0
+  let total = 0
+  for (let i = desde; i < hasta; i++) {
+    const a = paradas[i]
+    const b = paradas[i + 1]
+    if (a?.lat === undefined || a.lng === undefined || b?.lat === undefined || b.lng === undefined) return null
+    total += distanciaMetros({ lat: a.lat, lng: a.lng }, { lat: b.lat, lng: b.lng })
+  }
+  return total
+}
