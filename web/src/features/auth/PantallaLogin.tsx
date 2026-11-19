@@ -1,13 +1,16 @@
 import { useState } from 'react'
 import { Lock, MapPin } from 'lucide-react'
 import { Boton } from '../../components/Boton'
-import { loginConGoogle } from '../../services/auth'
+import { loginConGoogle, useSesion } from '../../services/auth'
 
 // Pantalla de entrada (#20, wireframe 00). Un solo botón, sin formularios ni contraseña.
 
 export default function PantallaLogin() {
   const [entrando, setEntrando] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [errorLocal, setError] = useState<string | null>(null)
+  // En el celular el login va a la página de Google y vuelve: si falló, el error llega por la sesión.
+  const errorAlVolver = useSesion().error
+  const error = errorLocal ?? errorAlVolver
 
   const entrar = async () => {
     setEntrando(true)
