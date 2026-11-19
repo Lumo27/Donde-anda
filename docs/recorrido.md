@@ -1,0 +1,124 @@
+# Recorrido del MVP — donde anda 🚌
+
+El MVP cubre **una sola línea, un ramal y un sentido**: la **510, Ramal 9**, cartel **"Sede Parque Industrial"**, en el viaje de ida desde Estación Alberti hasta la sede. Todo lo demás (vuelta, otros ramales, otras sedes) es una idea futura (F1).
+
+> 📏 **El recorrido, las paradas y los horarios de salida son reales; los tiempos entre paradas son estimados.** Los únicos tiempos confirmados son la salida de Alberti y el paso por Estación Del Viso. El resto se reemplaza cuando se mida la ruta 0 (#12), y eso no obliga a cambiar código.
+
+---
+
+## Línea
+
+| Dato | Valor | Fuente |
+|---|---|---|
+| Línea | **510**, empresa Pilar Bus S.A. | Moovit |
+| Ramal | **Ramal 9**, cartel "Sede Parque Industrial" | Página de la universidad |
+| Sentido del MVP | Ida: Estación Alberti → Sede Parque Industrial | Grupo |
+| Identificador en la base | `510-ida` | — |
+
+---
+
+## Horarios
+
+| | Mañana | Mediodía | Tarde | Fuente |
+|---|---|---|---|---|
+| Sale de **Estación Alberti** | 06:50 | 12:20 | 16:20 | Grupo (12:20); los otros, 15 min antes de Del Viso |
+| Pasa por **Estación Del Viso** | 07:05 | 12:35 | 16:35 | **Publicado por la universidad** |
+
+En la app: `horariosSalida: ["06:50", "12:20", "16:20"]` (salidas desde la cabecera, Alberti).
+
+El 53 % de la encuesta dice que los horarios **no se cumplen**. Por eso la app no depende solo de estos horarios: los combina con los tiempos de la ruta 0 y con los reportes en vivo.
+
+---
+
+## Itinerario y paradas (77, en orden)
+
+El recorrido se armó juntando tres fuentes. La lista completa, con la hora estimada de cada parada, está en [`ruta0/ruta0-RAMAL9-ESTIMADA.csv`](ruta0/ruta0-RAMAL9-ESTIMADA.csv). La columna `notas` dice de dónde sale cada parada y si su hora es REAL o ESTIMADA.
+
+### 1. Alberti → Del Viso → Panamericana (paradas 1 a 33)
+
+Fuente: **Moovit, 510 R5** (Alberti → Pilar x Del Viso), que va en el mismo sentido.
+
+Sale de **Estación Alberti**, cruza Alberti (Santa Rita, Plaza San Martín, Padre Roqueta, Santa Eulalia, Av. Constitución) y toma **Lisandro de la Torre**, donde dobla hacia el centro de Del Viso. Pasa por **Paseo Del Viso** y **Estación Del Viso** (parada 21, ✅ 12:35). Toma **Valentín Gómez** derecho, dobla por **Manuel Maza y Portinari**, vuelve a **Lisandro de la Torre** y sale a la Panamericana: **Colectora Este y Florida** y **12 de Octubre y Caamaño** (parada 33).
+
+### 2. Por Caamaño hasta Villa Rosa y vuelta a la Panamericana (paradas 34 a 59)
+
+Fuente: **Moovit, 510 R9 "Villa del Carmen"** (paradas 47 a 22 de esa línea, **al revés**, porque esa línea va de Pilar hacia Alberti). ✅ Confirmado por el grupo: por Villa Rosa hace el mismo recorrido en los dos sentidos, con las mismas paradas en orden inverso.
+
+Baja en **Caamaño**: Pueblo Caamaño, Barrio Haras del Pilar, Saint Matthew's, Club de Campo Chateau, Caamaño y Manzoni, Caamaño y Fosatti. Sigue por **Verazzi** y toma **Quinquela Martín**, pasa por Pilar del Este, recorre **Av. Honorio Pueyrredón** y llega a la **Estación Villa Rosa** (Belgrano Norte, parada 50). Da la vuelta por adentro (Moreno, Honorio Pueyrredón y Sánchez de Loria, **Chacabuco**) y pasa por el **Colegio St. John's** (parada 59).
+
+### 3. Por la Panamericana hasta Paseo Champagnat (paradas 60 a 71)
+
+Fuente: **Moovit, 510 R5**, del lado de la colectora en este sentido.
+
+Retoma la Panamericana en **12 de Octubre y Chacabuco** y sigue por la colectora (Hotel Sheraton, Siga La Vaca, Village Pilar, Tomás Guido, Naón, Honorio Pueyrredón) hasta **Paseo Champagnat** (parada 71).
+
+### 4. Panamericana y Acceso Norte hasta la sede (paradas 72 a 77)
+
+Fuente: **descripción del grupo**. Son referencias, todavía sin nombre oficial de parada.
+
+| Orden | Parada (referencia) | Detalle |
+|---|---|---|
+| 72 | 12 de Octubre y Domingo French (puente) | Baja en el puente y vuelve a subir a la Panamericana |
+| 73 | Panamericana y Granadero Juan Mateo Gelves | Después va directo por **Acceso Norte**, sin paradas |
+| 74 | Bajada Autopista y Pergamino (Colectora Ruta 8) | Baja por la colectora de la Ruta Nacional 8 |
+| 75 | Avenida Doctor Arturo Frondizi | Por Frondizi derecho |
+| 76 | Rotonda de la calle 9 | Entra por La Montonera |
+| 77 | **Sede Parque Industrial (El Cenáculo)** | Destino. ✅ Confirmado: El Cenáculo es la sede |
+
+---
+
+## Zonas (para elegir "mi parada")
+
+Al elegir su parada, la persona primero dice de qué zona está más cerca, o usa "Buscar la parada más cercana" con su ubicación, o mira la lista completa (#38).
+
+| Zona | Paradas |
+|---|---|
+| Alberti – Del Viso | 1 a 21 (hasta Estación Del Viso) |
+| Del Viso – Panamericana | 22 a 33 (hasta 12 de Octubre y Caamaño) |
+| Panamericana – Villa Rosa | 34 a 50 (hasta Estación Villa Rosa) |
+| Villa Rosa – Panamericana | 51 a 60 (hasta 12 de Octubre y Chacabuco) |
+| Panamericana – Pilar | 61 a 71 (hasta Paseo Champagnat) |
+| Pilar – Parque Industrial | 72 a 77 (hasta la sede) |
+
+## Ubicación de las paradas
+
+[`ruta0/paradas-coordenadas.csv`](ruta0/paradas-coordenadas.csv) tiene la latitud y longitud de cada parada, calculadas con las calles de OpenStreetMap ([`scripts/coordenadas-paradas.py`](../scripts/coordenadas-paradas.py)). La columna `fuente` dice cómo se obtuvo cada una:
+- **Cruce de calles (42):** el punto donde se cruzan las dos calles en el mapa.
+- **Referencia de calles (3):** tramo final (Pergamino, Frondizi, rotonda de la calle 9).
+- **Aproximada (32):** estaciones, colegios, barrios y esquinas que no aparecen; se ubican entre la parada anterior y la siguiente (error de una o dos cuadras).
+
+👉 **En la ruta 0 (#12), marcar con el GPS del celular la ubicación de cada parada** y reemplazar las aproximadas.
+
+Datos de calles © OpenStreetMap contributors (licencia ODbL).
+
+## Días de servicio
+
+Por ahora, **todos los días** (`diasServicio: [0, 1, 2, 3, 4, 5, 6]` en `web/src/services/datos.ts`, 0 = domingo). Para probar solo los lunes se cambia a `[1]`. Los días sin servicio la app dice "Hoy no hay servicio".
+
+## Control de la estimación con un viaje real
+
+Un integrante del grupo toma la **vuelta** (sede → Alberti) los lunes: sale de la sede entre las **18:02 y las 18:05**, va por Panamericana, pasa por Villa Rosa, vuelve a la Panamericana, entra a Del Viso y lo deja en **Manuel Maza y San Cayetano** cerca de las **19:10**. Son **unos 65 minutos**.
+
+En la estimación de la ida, el tramo equivalente (Valentín Gómez y San Cayetano, la parada de la ida a la vuelta de la esquina → sede, 12:38 → 13:45) da **unos 66 minutos**. No es el mismo sentido, así que no reemplaza la ruta 0, pero indica que el orden de magnitud de la estimación es correcto.
+
+## Qué falta confirmar
+
+- **Tiempos de cada parada:** se miden en la ruta 0 (#12). Hoy el viaje estimado dura **85 minutos** (12:20 → 13:45), con 30 s detenido en cada parada (el mismo piso que usa el margen, para que no infle de más). Solo la salida de Alberti y el paso por Del Viso son reales.
+- **Tramo 4:** los nombres oficiales de las paradas 72 a 76. Esas líneas de Moovit no hacen ese tramo, así que hoy son referencias del grupo.
+- **Qué paradas usan los estudiantes:** sirve para el piloto; la app igual muestra todas.
+
+---
+
+## Cómo se marca que los tiempos son estimados
+
+- **CSV:** cada fila dice REAL o ESTIMADO en `notas`.
+- **Base de datos:** el recorrido `510-ida` se carga con `ficticia: true` (datos sin medir).
+- **App:** mientras `ficticia` sea `true`, muestra el cartel **"Tiempos estimados: falta medir la ruta 0"**.
+
+**Cuando estén los datos reales:**
+1. Medir la ruta 0 (#12) con el mismo formato de CSV: orden, parada, hora de llegada, hora de salida, si se detuvo y notas.
+2. Reemplazar las horas del CSV (y ajustar paradas si hace falta).
+3. Recargar la ruta (#18).
+4. Poner `ficticia: false`.
+
+> `ruta0-FICTICIA.csv` (la ruta inventada del principio) se queda **solo para los tests de los cálculos**: sus números están verificados a mano y no cambian.

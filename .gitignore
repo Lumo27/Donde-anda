@@ -1,0 +1,17 @@
+# Dependencias y builds
+node_modules/
+dist/
+
+# Claves y credenciales: NUNCA se commitean
+.env
+.env.*
+!.env.example
+*-service-account*.json
+serviceAccount*.json
+
+# Firebase CLI
+.firebase/
+*-debug.log
+
+# Sistema / editor
+.DS_Store
